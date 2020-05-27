@@ -23,3 +23,59 @@
 #random-image-container img {
   margin-top: 20px;
 }
+.content-bg-1{
+    background-image: url("images/lemon-bg.jpeg");
+}
+.content-bg-2{
+    background-image: url("images/grapefruit-bg.jpeg");
+    display: flex;
+    justify-content: center;
+}
+.content-bg-3{
+    background-image: url("images/corn-bg.jpeg");
+}
+ #content-bg{
+    background-repeat: repeat;
+    background-size: cover;
+    min-height: 100vh;
+    padding:50px;
+
+ }
+ body{
+     font-family: Verdana;
+     color:black;
+     text-align: center;
+ }
+ h1{
+    font-size: 300%;
+ }
+
+ #first-page{
+    background-color: #F7EBBC;
+    
+
+ }
+  .page2-boxes{
+    background-color: #DEA5B3;
+	width: 40%;
+    margin-left: 2%;
+    margin-right: 2%;
+    padding:3%;
+    box-shadow: 10px 10px 5px #888;
+    border-radius: 5px;
+    margin: auto;
+    
+ }
+  #third-page{
+    background-color: #F6D8A8;
+    
+ }
+
+ .full-page{
+    min-height: 100vh;
+    width: 50%;
+    box-shadow: 10px 10px 5px #888;
+ 	border-radius: 5px;
+ 	padding: 20px;
+    margin: auto;
+ }
