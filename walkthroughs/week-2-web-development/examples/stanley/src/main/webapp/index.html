@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <title>All About Jalyn 🐈</title>
     <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
   </head>
   <body>
-<div class="navigation-bar">
+<div id="navigation-bar">
 	<h3><a class="nav" href="/index.html">Home</a></h3>
     <h3><a  class="nav" href="/resume.html">Resume</a></h3>
     <h3><a class="nav" href="/socials.html">Socials</a></h3>
@@ -46,25 +47,52 @@
             </p>
         </div>
     </div>
-    <div class="content-bg-3" id="content-bg">
-      	<section id="third-page" class="full-page">
-            <h1>Making change to see changes
-            </h1>
-            <p>
-                Nam at lectus urna duis convallis convallis tellus id. Tortor dignissim convallis 
-                aenean et tortor. Montes nascetur ridiculus mus mauris vitae ultricies leo. 
-                Praesent tristique magna sit amet purus gravida. Nulla facilisi cras fermentum 
-                odio eu feugiat. In hendrerit gravida rutrum quisque. Odio euismod lacinia at quis 
-                risus sed. Quis viverra nibh cras pulvinar mattis nunc sed blandit. Vitae tortor 
-                condimentum lacinia quis vel eros donec. Aliquam nulla facilisi cras fermentum 
-                odio eu feugiat pretium nibh. Odio eu feugiat pretium nibh ipsum. Aliquet bibendum 
-                enim facilisis gravida neque. Quam vulputate dignissim suspendisse in est ante in 
-                nibh mauris.
-            </p>
-        </section>
-    </div>
-      <p>Click <a href="images.html">here</a> to see more pictures of Stanley!</p>
-      <p>Click <a href="random.html">here</a> to see a random picture of Stanley!</p>
+
+<!-- Slideshow container -->
+<div class="slideshow-container">
+
+  <div class="mySlides fade">
+    <div class="numbertext">1 / 5</div>
+    <img src="images/profilepic.jpg">
+    <div class="text">Caption Text</div>
+  </div>
+
+  <div class="mySlides fade">
+    <div class="numbertext">2 / 5</div>
+    <img src="images/cssi-pic.jpg">
+    <div class="text">Caption Two</div>
+  </div>
+
+  <div class="mySlides fade">
+    <div class="numbertext">3 / 5</div>
+    <img src="images/ut-pic.JPG">
+    <div class="text">Caption Three</div>
+  </div>
+
+  <div class="mySlides fade">
+    <div class="numbertext">4 / 5</div>
+    <img src="images/bike-pic.jpeg">
+    <div class="text">Caption Four</div>
+  </div>
+
+  <div class="mySlides fade">
+    <div class="numbertext">5 / 5</div>
+    <img src="images/denim-pic.JPG">
+    <div class="text">Caption Five</div>
+  </div>
+
+  <!-- Next and previous buttons -->
+  <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+  <a class="next" onclick="plusSlides(1)">&#10095;</a>
+</div>
+<br>
+
+<!-- The dots/circles -->
+<div style="text-align:center">
+  <span class="dot" onclick="currentSlide(1)"></span>
+  <span class="dot" onclick="currentSlide(2)"></span>
+  <span class="dot" onclick="currentSlide(3)"></span>
+</div>
     </div>
   </body>
 </html>
