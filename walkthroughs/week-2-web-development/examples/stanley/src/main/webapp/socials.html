@@ -6,11 +6,80 @@
 
   <title>Socials</title>
 
-  <link rel="stylesheet" href="style.css">
+
+  <style>
+    ul{
+    	list-style: none;
+    }
+    li{
+    	display: inline;
+    	float: left;
+    }
+    body{
+    	background-image: url("images/eggs.jpg");
+        background-size:100% 100vh;
+        font-famile: googleFont;
+    }
+    @font-face{
+        font-family: googleFont;
+        src: url("/fonts/Product Sans Regular.ttf");
+    }
+    h1{
+        font-size: 400%;
+        text-shadow: 2px 2px #626260;
+        text-align: center;
+        margin-top: 4vh;
+        padding: 2vh;
+    }
+    img{
+        width: 30vh;
+        height: 30vh;
+        margin: 2vh;
+        margin-top: 5vh;
+        transition: transform 1s;
+    }
+    img:hover{
+        transform: scaleX(-1);
+
+    }
+    #container{
+        height: 60vh;
+        width: 150vh;
+        background-color: #F6F4E9;
+        margin: auto;
+        opacity: 0.98;
+        border-radius: 50px;
+    }
+      </style>
 
 </head>
 
 <body>
-  <h1> This will eventually have content, but for now this is my socials page!</h1>
+  
+<div id="container">
+<h1>Connect On My Socials</h1>
+<ul>
+  <li>
+    <a href="www.github.com">
+        <img src="/images/github.png">
+    </a>
+  </li>
+  <li>
+    <a href="www.twitter.com">
+        <img src="/images/twitter.png">
+    </a>
+  </li>
+  <li>
+    <a href="www.instagram.com">
+        <img src="/images/insta.png">
+    </a>
+  <li>
+    <a href="www.linkedin.com">
+        <img src="/images/linked-in.png">      
+    <a>
+  </li>
+</ul>
+</div>
+
 </body>
 </html>
