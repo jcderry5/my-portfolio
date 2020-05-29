@@ -116,10 +116,13 @@ h1{
     opacity: .95;
     z-index:50;
  }
- 
- .nav{
+
+  .nav{
+	display:flex;
+	justify-content:center;
+	align-items:center;
     margin: 10px;
- }
+}
 
  .nav-btn{
     cursor:pointer;
@@ -165,12 +168,7 @@ h1{
     height:100%;
 	}
 
- .nav{
-	background:#C9D6D8;
-	display:flex;
-	justify-content:center;
-	align-items:center;
-}
+
 
  a{
     text-decoration: none;
