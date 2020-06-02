@@ -11,7 +11,7 @@ body{
 }
 @font-face{
     font-family: googleFont;
-    src: url("/fonts/Product Sans Regular.ttf");
+    src: url("/fonts/Product-Sans-Regular.ttf");
 }
 h1{
     font-size: 400%;
