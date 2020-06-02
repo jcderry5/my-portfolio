@@ -20,13 +20,15 @@ import java.util.ArrayList;
 /** Class containing server statistics. */
 public final class ServerStats {
 
-  private final ArrayList<String> sampleComments = new ArrayList<>();
+	private final String testComment;
+	private final ArrayList<String> sampleComments = new ArrayList<>();
 
-  public ServerStats(ArrayList<String> sampleComments) {
-    for(int index = 0; index < sampleComments.size(); index++){
+	public ServerStats(ArrayList<String> sampleComments) {
+    	this.testComment = "This is a test comment. I better not see you.";
+        for(int index = 0; index < sampleComments.size(); index++){
         this.sampleComments.add(sampleComments.get(index));
-    }
-  }
+    	}
+  	}
 
   public String getSampleComment(int index){
       if(index >= sampleComments.size() || index < 0){

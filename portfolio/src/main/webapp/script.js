@@ -13,27 +13,60 @@
 // limitations under the License.
 
 /**
- * Adds a random greeting to the page.
+ * Fetches stats from the servers and adds them to the DOM.
  */
-function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
+function generateDiscussion() {
+    console.log("Testing Testing Uno Dos Tres");
+  	
+    fetch('/data').then(response => response.json()).then((discussion) => {
+        // discussion is an object, not a string, so we have to
+        // reference its fields to create HTML content
 
-  // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+        console.log(discussion);
 
-  // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
+        const discussionListElement = document.getElementById('discussion-container');
+        discussionListElement.innerHTML = '';
+    	discussionListElement.appendChild(
+        	createListElement('Comment #0: ' + discussion.Comment0));
+        discussionListElement.appendChild(
+        	createListElement('Comment #1: ' + discussion.Comment1));
+        discussionListElement.appendChild(
+        	createListElement('Comment #2: ' + discussion.Comment2));
+  	});
+
+    console.log("cuatro cuatro");
+
+    //console.log(responsePromise);
+
+    //responsePromise.then(handleResponse);
 }
 
-function addRandomCountry(){
-    const countries = ['Argentina', 'Germany', 'Finland', 'Thailand', 'Botswana'];
+function handleResponse(response){
+    console.log('Six is the magic number');
 
-    // Pick a random country
-    const country = countries[Math.floor(Math.random() * countries.length)];
+    const firstComment = response.text();
 
-    // Add it to the page
-    const countryContainer = document.getElementById('country-container')
-    countryContainer.innerText = country;
+    console.log(firstComment + 'is the firstComment');
+
+    firstComment.then(printComment);
+}
+
+function printComment(comment){
+    console.log('Seven for heaven');
+
+    const discussionListElement = document.getElementById('discussin-container');
+	discussionListElement.innerHTML = '';
+    discussionListElement.appendChild(
+        createListElement('first comment: ' + comments.getSampleComment(0)));
+    
+    console.log('number eight mate');
+
+    console.log(discussionListElement);
+}
+
+/** Creates an <li> element containing text. */
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
 }

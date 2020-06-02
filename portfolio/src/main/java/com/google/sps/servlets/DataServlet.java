@@ -51,11 +51,14 @@ public final class DataServlet extends HttpServlet {
     */
     private String convertToJson(ServerStats serverData) {
         String json = "{";
+        json += "\"Comment" + 0 + "\": ";
+    	json += "\"" + serverData.getSampleComment(0) + "\"";
 
         // loop through all comments in serverData array and concatenate it to json
-        for(int index = 0; index < serverData.getSampleCommentsSize(); index++){
-            json += "Comment #" + index + ": ";
-            json += serverData.getSampleComment(index) + " ";
+        for(int index = 1; index < serverData.getSampleCommentsSize(); index++){
+            json += ", ";
+            json += "\"Comment" + index + "\": ";
+            json += "\"" + serverData.getSampleComment(index) + "\"";
         }
         json += "}";
         return json;
