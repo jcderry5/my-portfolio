@@ -1,4 +1,4 @@
-<h1> Discussion Board </h1>
+
 /**
  * Adds a random greeting to the page.
  */
