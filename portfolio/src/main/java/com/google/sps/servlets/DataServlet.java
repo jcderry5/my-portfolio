@@ -15,6 +15,7 @@
 package com.google.sps.servlets;
 
 import com.google.sps.data.PortfolioComments;
+import com.google.gson.Gson;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -37,8 +38,12 @@ public final class DataServlet extends HttpServlet {
         commentsRecord.addComment("This is dad! Go break some eggs, babygirl.");
 
 	    // Create commentsRecord object in json form
-        String json = convertToJson(commentsRecord);
-
+        
+        
+        //String json = convertToJson(commentsRecord);
+        String json = new Gson().toJson(commentsRecord);
+        
+        
         // Send the JSON as the response
         response.setContentType("application/json;");
         response.getWriter().println(json);

@@ -40,14 +40,13 @@ function addToContainer(discussion_log){
 
 	console.log('Adding comments to the discussion-container');
 
+    // Build the list of previous comments
     const discussionListElement = document.getElementById('discussion-container');
-    discussionListElement.innerHTML = '';
-    discussionListElement.appendChild(
-        createListElement('Comment: ' + discussion_log.Comment0));
-    discussionListElement.appendChild(
-        createListElement('Comment: ' + discussion_log.Comment1));
-    discussionListElement.appendChild(
-        createListElement('Comment: ' + discussion_log.Comment2));
+    discussion_log.masterCommentList.forEach((line) =>
+        discussionListElement.appendChild(createListElement(line))
+    );
+    
+    
 }
 
 /** Creates an <li> element containing text. */
