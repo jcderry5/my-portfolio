@@ -27,10 +27,12 @@ import java.util.ArrayList;
 @WebServlet("/data")
 public final class DataServlet extends HttpServlet {
 
+	private PortfolioComments commentsRecord = new PortfolioComments();
+
 	@Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         
-        PortfolioComments commentsRecord = new PortfolioComments();
+        
 
         // Add Sample Comments
         commentsRecord.addComment("You rock! Keep on coding!");
@@ -38,11 +40,7 @@ public final class DataServlet extends HttpServlet {
         commentsRecord.addComment("This is dad! Go break some eggs, babygirl.");
 
 	    // Create commentsRecord object in json form
-        
-        
-        //String json = convertToJson(commentsRecord);
         String json = new Gson().toJson(commentsRecord);
-        
         
         // Send the JSON as the response
         response.setContentType("application/json;");
@@ -50,21 +48,16 @@ public final class DataServlet extends HttpServlet {
 
     }
 
-    /**
-    * Converts the commentsRecord instance into a JSON string using manual String concatentation.
-    */
-    private String convertToJson(PortfolioComments commentsRecord) {
-        String json = "{";
-        json += "\"Comment0\": ";
-    	json += "\"" + commentsRecord.getComment(0) + "\"";
+	/* Receive Any New Inputed Comments from User */
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // Get Input from the Form
+    	String userInput = request.getParameter("user-comment");
 
-        // loop through all comments in commentsRecord array and concatenate it to json
-        for(int index = 1; index < commentsRecord.getMasterCommentListSize(); index++){
-            json += ", ";
-            json += "\"Comment" + index + "\": ";
-            json += "\"" + commentsRecord.getComment(index) + "\"";
-        }
-        json += "}";
-        return json;
+        // Add Input to the Master list of User Comments
+        commentsRecord.addComment(userInput);
+
+        //Redirect back to HTML page
+        response.sendRedirect("/discussion.html");
     }
 }
