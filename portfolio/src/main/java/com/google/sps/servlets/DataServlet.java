@@ -36,12 +36,7 @@ public final class DataServlet extends HttpServlet {
         commentsRecord.addComment("This is momma! You got this girl :-)");
         commentsRecord.addComment("This is dad! Go break some eggs, babygirl.");
 
-	    // Create commentsRecord object in json form
-        String json = convertToJson(commentsRecord);
-
-        // Send the JSON as the response
-        response.setContentType("application/json;");
-        response.getWriter().println(json);
+        // TODO: Put Each Comment in JSON Form and Print it
 
     }
 
@@ -49,17 +44,6 @@ public final class DataServlet extends HttpServlet {
     * Converts the commentsRecord instance into a JSON string using manual String concatentation.
     */
     private String convertToJson(PortfolioComments commentsRecord) {
-        String json = "{";
-        json += "\"Comment0\": ";
-    	json += "\"" + commentsRecord.getComment(0) + "\"";
-
-        // loop through all comments in commentsRecord array and concatenate it to json
-        for(int index = 1; index < commentsRecord.getMasterCommentListSize(); index++){
-            json += ", ";
-            json += "\"Comment" + index + "\": ";
-            json += "\"" + commentsRecord.getComment(index) + "\"";
-        }
-        json += "}";
-        return json;
+        // TODO: Form String in JSON form using String concatentation
     }
 }
