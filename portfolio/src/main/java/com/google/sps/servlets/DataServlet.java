@@ -14,7 +14,7 @@
 
 package com.google.sps.servlets;
 
-import com.google.sps.data.ServerStats;
+import com.google.sps.data.PortfolioComments;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,17 +28,16 @@ public final class DataServlet extends HttpServlet {
 
 	@Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-            
-        // Generate the comments for the discussion board in array list
+        
+        PortfolioComments commentsRecord = new PortfolioComments();
 
-        ArrayList<String> sampleComments = new ArrayList<>();
-        sampleComments.add("You rock! Keep on coding!");
-        sampleComments.add("This is momma! You got this girl :-)");
-        sampleComments.add("This is dad! Go break some eggs, babygirl.");
+        // Add Sample Comments
+        commentsRecord.addComment("You rock! Keep on coding!");
+        commentsRecord.addComment("This is momma! You got this girl :-)");
+        commentsRecord.addComment("This is dad! Go break some eggs, babygirl.");
 
-        // Create serverData object in json form
-        ServerStats serverData = new ServerStats(sampleComments);
-        String json = convertToJson(serverData);
+	    // Create commentsRecord object in json form
+        String json = convertToJson(commentsRecord);
 
         // Send the JSON as the response
         response.setContentType("application/json;");
@@ -47,18 +46,18 @@ public final class DataServlet extends HttpServlet {
     }
 
     /**
-    * Converts a serverData instance into a JSON string using manual String concatentation.
+    * Converts the commentsRecord instance into a JSON string using manual String concatentation.
     */
-    private String convertToJson(ServerStats serverData) {
+    private String convertToJson(PortfolioComments commentsRecord) {
         String json = "{";
-        json += "\"Comment" + 0 + "\": ";
-    	json += "\"" + serverData.getSampleComment(0) + "\"";
+        json += "\"Comment0\": ";
+    	json += "\"" + commentsRecord.getComment(0) + "\"";
 
-        // loop through all comments in serverData array and concatenate it to json
-        for(int index = 1; index < serverData.getSampleCommentsSize(); index++){
+        // loop through all comments in commentsRecord array and concatenate it to json
+        for(int index = 1; index < commentsRecord.getMasterCommentListSize(); index++){
             json += ", ";
             json += "\"Comment" + index + "\": ";
-            json += "\"" + serverData.getSampleComment(index) + "\"";
+            json += "\"" + commentsRecord.getComment(index) + "\"";
         }
         json += "}";
         return json;

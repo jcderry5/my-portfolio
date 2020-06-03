@@ -16,27 +16,43 @@
  * Fetches stats from the servers and adds them to the DOM.
  */
 function generateDiscussion() {
-  	
-    fetch('/data').then(response => response.json()).then((discussion) => {
-        // discussion is an object, not a string, so we have to
-        // reference its fields to create HTML content
+  	console.log('Fetching discussion.');
 
-        console.log(discussion);
+    // fetch() function returns a promise
+    const discussionLogPromise = fetch('/data');
 
-        const discussionListElement = document.getElementById('discussion-container');
-        discussionListElement.innerHTML = '';
-    	discussionListElement.appendChild(
-        	createListElement('Comment #0: ' + discussion.Comment0));
-        discussionListElement.appendChild(
-        	createListElement('Comment #1: ' + discussion.Comment1));
-        discussionListElement.appendChild(
-        	createListElement('Comment #2: ' + discussion.Comment2));
-  	});
+	// When the request is complete, pass the response into parseJSON()
+    discussionLogPromise.then(parseJSON);
+}
+
+
+// This function will handle the response and turn it to json
+function parseJSON(response){
+    console.log('Parse the response into JSON');
+
+    const discussionLog = response.json();
+
+    discussionLog.then(addToContainer);
+}
+
+// This function will add each comment to the discussion container
+function addToContainer(discussion_log){
+
+	console.log('Adding comments to the discussion-container');
+
+    const discussionListElement = document.getElementById('discussion-container');
+    discussionListElement.innerHTML = '';
+    discussionListElement.appendChild(
+        createListElement('Comment: ' + discussion_log.Comment0));
+    discussionListElement.appendChild(
+        createListElement('Comment: ' + discussion_log.Comment1));
+    discussionListElement.appendChild(
+        createListElement('Comment: ' + discussion_log.Comment2));
 }
 
 /** Creates an <li> element containing text. */
 function createListElement(text) {
-  const liElement = document.createElement('li');
-  liElement.innerText = text;
-  return liElement;
+	const liElement = document.createElement('li');
+    liElement.innerText = text;
+    return liElement;
 }
