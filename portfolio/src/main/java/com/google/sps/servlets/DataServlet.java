@@ -16,6 +16,9 @@ package com.google.sps.servlets;
 
 import com.google.sps.data.PortfolioComments;
 import com.google.gson.Gson;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -46,9 +49,17 @@ public final class DataServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         // Get Input from the Form
     	String userInput = request.getParameter("user-comment");
+        long timestamp = System.currentTimeMillis();
 
         // Add Input to the Master list of User Comments
-        commentsRecord.addComment(userInput);
+        //commentsRecord.addComment(userInput);
+        Entity commentsEntity = new Entity("Comments");
+        commentsEntity.setProperty("userInput", userInput);
+        commentsEntity.setProperty("timestamp", timestamp);
+
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        datastore.put(commentsEntity);
+
 
         //Redirect back to HTML page
         response.sendRedirect("/discussion.html");
