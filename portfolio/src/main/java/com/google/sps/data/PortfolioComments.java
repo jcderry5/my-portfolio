@@ -22,10 +22,6 @@ public final class PortfolioComments {
 
 	private final List<String> masterCommentList = new ArrayList<>();
 
-	public PortfolioComments() {
-        addComment("This is the first comment in masterCommentList");
-  	}
-
     public void addComment(String comment){
         masterCommentList.add(comment);
     }

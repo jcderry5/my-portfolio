@@ -41,7 +41,7 @@ function addToContainer(discussion_log){
 	console.log('Adding comments to the discussion-container');
 
     // Build the list of previous comments
-    const discussionListElement = document.getElementById('discussion-container');
+    const discussionListElement = document.getElementById('prev-comments');
     discussion_log.masterCommentList.forEach((line) =>
         discussionListElement.appendChild(createListElement(line))
     );

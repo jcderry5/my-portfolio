@@ -31,13 +31,6 @@ public final class DataServlet extends HttpServlet {
 
 	@Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        
-        
-
-        // Add Sample Comments
-        commentsRecord.addComment("You rock! Keep on coding!");
-        commentsRecord.addComment("This is momma! You got this girl :-)");
-        commentsRecord.addComment("This is dad! Go break some eggs, babygirl.");
 
 	    // Create commentsRecord object in json form
         String json = new Gson().toJson(commentsRecord);
