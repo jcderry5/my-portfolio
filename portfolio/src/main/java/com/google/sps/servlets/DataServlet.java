@@ -48,10 +48,11 @@ public final class DataServlet extends HttpServlet {
 
         for (Entity entity : results.asIterable()) {
             long id = entity.getKey().getId();
+            String username = (String) entity.getProperty("userName");
             String comment = (String) entity.getProperty("userComment");
             long timestamp = (long) entity.getProperty("timestamp");
 
-            Task userEntry = new Task(id, comment, timestamp);
+            Task userEntry = new Task(id, username, comment, timestamp);
             commentsRecord.add(userEntry);
     	}
 
@@ -68,16 +69,18 @@ public final class DataServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         // Get Input from the Form
+        String userName = request.getParameter("user-name");
     	String userComment = request.getParameter("user-comment");
         long timestamp = System.currentTimeMillis();
 
         // Add Input to the Master list of User Comments
-        Entity commentEntity = new Entity("Comments");
-        commentEntity.setProperty("userComment", userComment);
-        commentEntity.setProperty("timestamp", timestamp);
+        Entity inputEntity = new Entity("Comments");
+        inputEntity.setProperty("userName", userName);
+        inputEntity.setProperty("userComment", userComment);
+        inputEntity.setProperty("timestamp", timestamp);
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        datastore.put(commentEntity);
+        datastore.put(inputEntity);
 
 
         //Redirect back to HTML page

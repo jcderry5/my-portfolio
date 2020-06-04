@@ -41,8 +41,10 @@ function addToContainer(discussion_log){
 	console.log('Adding comments to the discussion-container');
     // Build the list of previous comments
     const discussionListElement = document.getElementById('row');
+    console.log('Outside the forEach loop.');
+    console.log(discussion_log);
     discussion_log.forEach((userInput) => {
-        console.log(userInput);
+        console.log('Inside the forEach loop.');
         discussionListElement.appendChild(createElement(userInput));
     })
     
@@ -50,14 +52,21 @@ function addToContainer(discussion_log){
 
 /** Creates an <li> element containing text. */
 function createElement(userInput) {
+	
+    //Printing userInput for testing purposes
+    console.log('Inside the createElement function');
+    console.log(userInput);
 
+    // Create Body Element that userName and userComment will be in
     const commentBody = document.createElement('div');
     commentBody.className = 'comment-body';
 
-
+	// Create Title Element that contains the userName
 	const titleElement = document.createElement('h2');
     titleElement.className = 'user-title';
+    titleElement.innerText = userInput.userName;
 
+	// Create Comment Element that Comment will go in
     const commentElement = document.createElement('p');
     commentElement.className = 'comment-box';
     commentElement.innerText = userInput.userComment;
