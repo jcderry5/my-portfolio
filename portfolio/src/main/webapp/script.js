@@ -40,20 +40,26 @@ function addToContainer(discussion_log){
 
 	console.log('Adding comments to the discussion-container');
     // Build the list of previous comments
-    const discussionListElement = document.getElementById('prev-comments');
+    const discussionListElement = document.getElementById('row');
     discussion_log.forEach((userInput) => {
         console.log(userInput);
-        discussionListElement.appendChild(createListElement(userInput));
+        discussionListElement.appendChild(createElement(userInput));
     })
     
 }
 
 /** Creates an <li> element containing text. */
-function createListElement(userInput) {
-	const liElement = document.createElement('li');
-    liElement.className = 'user';
+function createElement(userInput) {
 
-    const commentElement = document.createElement('span');
+    const commentBody = document.createElement('div');
+    commentBody.className = 'comment-body';
+
+
+	const titleElement = document.createElement('h2');
+    titleElement.className = 'user-title';
+
+    const commentElement = document.createElement('p');
+    commentElement.className = 'comment-box';
     commentElement.innerText = userInput.userComment;
 
     const deleteButtonElement = document.createElement('button');
@@ -62,12 +68,13 @@ function createListElement(userInput) {
     	deleteComment(comment);
 
     	// Remove the comment from the DOM.
-    	liElement.remove();
+    	commentBody.remove();
   	});
 	
-    liElement.appendChild(commentElement);
-    liElement.appendChild(deleteButtonElement);
-    return liElement;
+    commentBody.appendChild(titleElement);
+    commentBody.appendChild(commentElement);
+    commentBody.appendChild(deleteButtonElement);
+    return commentBody;
 }
 
 /** Tells the server to delete the comment. */
