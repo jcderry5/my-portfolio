@@ -14,20 +14,23 @@
 
 package com.google.sps.servlets;
 
-import com.google.sps.data.PortfolioComments;
-import com.google.gson.Gson;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.sps.data.PortfolioComments;
+import com.google.gson.Gson;
+import com.google.sps.data.Task;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
+
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
@@ -37,6 +40,20 @@ public final class DataServlet extends HttpServlet {
 
 	@Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Query query = new Query("Comments").addSort("timestamp", SortDirection.DESCENDING);
+
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        PreparedQuery results = datastore.prepare(query);
+
+        List<Task> commentsRecord = new ArrayList<>();
+        for (Entity entity : results.asIterable()) {
+            long id = entity.getKey().getId();
+            String userInput = (String) entity.getProperty("userInput");
+            long timestamp = (long) entity.getProperty("timestamp");
+
+            Task task = new Task(id, userInput, timestamp);
+            commentsRecord.add(task);
+    	}
 
 	    // Create commentsRecord object in json form
         String json = new Gson().toJson(commentsRecord);
