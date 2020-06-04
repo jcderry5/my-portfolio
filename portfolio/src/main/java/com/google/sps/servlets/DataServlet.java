@@ -20,7 +20,6 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
-import com.google.sps.data.PortfolioComments;
 import com.google.gson.Gson;
 import com.google.sps.data.Task;
 import java.io.IOException;
@@ -36,23 +35,24 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public final class DataServlet extends HttpServlet {
 
-	private PortfolioComments commentsRecord = new PortfolioComments();
-
 	@Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        
+        // Gather all the user comments and sort them by timestamp
         Query query = new Query("Comments").addSort("timestamp", SortDirection.DESCENDING);
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         PreparedQuery results = datastore.prepare(query);
 
         List<Task> commentsRecord = new ArrayList<>();
+
         for (Entity entity : results.asIterable()) {
             long id = entity.getKey().getId();
-            String userInput = (String) entity.getProperty("userInput");
+            String comment = (String) entity.getProperty("userComment");
             long timestamp = (long) entity.getProperty("timestamp");
 
-            Task task = new Task(id, userInput, timestamp);
-            commentsRecord.add(task);
+            Task userEntry = new Task(id, comment, timestamp);
+            commentsRecord.add(userEntry);
     	}
 
 	    // Create commentsRecord object in json form
@@ -68,17 +68,16 @@ public final class DataServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         // Get Input from the Form
-    	String userInput = request.getParameter("user-comment");
+    	String userComment = request.getParameter("user-comment");
         long timestamp = System.currentTimeMillis();
 
         // Add Input to the Master list of User Comments
-        //commentsRecord.addComment(userInput);
-        Entity commentsEntity = new Entity("Comments");
-        commentsEntity.setProperty("userInput", userInput);
-        commentsEntity.setProperty("timestamp", timestamp);
+        Entity commentEntity = new Entity("Comments");
+        commentEntity.setProperty("userComment", userComment);
+        commentEntity.setProperty("timestamp", timestamp);
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        datastore.put(commentsEntity);
+        datastore.put(commentEntity);
 
 
         //Redirect back to HTML page

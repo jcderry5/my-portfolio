@@ -39,19 +39,23 @@ function parseJSON(response){
 function addToContainer(discussion_log){
 
 	console.log('Adding comments to the discussion-container');
-
     // Build the list of previous comments
     const discussionListElement = document.getElementById('prev-comments');
-    discussion_log.masterCommentList.forEach((line) =>
-        discussionListElement.appendChild(createListElement(line))
-    );
-    
+    discussion_log.forEach((userInput) => {
+        console.log(userInput);
+        discussionListElement.appendChild(createListElement(userInput));
+    })
     
 }
 
 /** Creates an <li> element containing text. */
-function createListElement(text) {
+function createListElement(userInput) {
 	const liElement = document.createElement('li');
-    liElement.innerText = text;
+    liElement.className = 'user';
+
+    const commentElement = document.createElement('span');
+    commentElement.innerText = userInput.userComment;
+
+    liElement.appendChild(commentElement);
     return liElement;
 }
