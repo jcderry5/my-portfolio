@@ -71,6 +71,8 @@ function createElement(userInput) {
     commentElement.className = 'comment-box';
     commentElement.innerText = userInput.userComment;
 
+	// Create a button element that allows the user to delete comment
+    // TODO: Make functioning
     const deleteButtonElement = document.createElement('button');
   	deleteButtonElement.innerText = 'Delete';
   	deleteButtonElement.addEventListener('click', () => {
@@ -80,9 +82,14 @@ function createElement(userInput) {
     	commentBody.remove();
   	});
 	
+    // Add a horizontal line break between comments
+    const horizLineElement = document.createElement('hr');
+
+    //Append all children of the comment body to comment body
     commentBody.appendChild(titleElement);
     commentBody.appendChild(commentElement);
     commentBody.appendChild(deleteButtonElement);
+    commentBody.appendChild(horizLineElement);
     return commentBody;
 }
 
