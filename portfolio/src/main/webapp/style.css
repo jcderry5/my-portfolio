@@ -15,6 +15,10 @@ h1{
     text-shadow: 2px 2px #C9D6D8;
 }
 
+ul{
+    list-style-position: inside;
+}
+
 #first-page{
    background-color: #E8E6F7;
    box-shadow: 10px 10px 5px #888;

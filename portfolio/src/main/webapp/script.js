@@ -56,6 +56,23 @@ function createListElement(userInput) {
     const commentElement = document.createElement('span');
     commentElement.innerText = userInput.userComment;
 
+    const deleteButtonElement = document.createElement('button');
+  	deleteButtonElement.innerText = 'Delete';
+  	deleteButtonElement.addEventListener('click', () => {
+    	deleteComment(comment);
+
+    	// Remove the comment from the DOM.
+    	liElement.remove();
+  	});
+	
     liElement.appendChild(commentElement);
+    liElement.appendChild(deleteButtonElement);
     return liElement;
+}
+
+/** Tells the server to delete the comment. */
+function deleteComment(comment) {
+  const params = new URLSearchParams();
+  params.append('id', comment.id);
+  fetch('/delete-comment', {method: 'POST', body: params});
 }
