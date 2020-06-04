@@ -20,6 +20,21 @@ ul{
     list-style: none;
 }
 
+#row{
+    text-align: left;
+    border-color: black;
+    border-radius: 10px;
+    box-shadow: 5px 2px 7px #888;
+    background-color: white;
+    padding: 30px;
+    width: 80vh;
+    margin: auto;
+}
+
+#content {
+
+}
+
 #first-page{
    background-color: #E8E6F7;
    box-shadow: 10px 10px 5px #888;
