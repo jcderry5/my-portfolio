@@ -7,7 +7,6 @@ body{
     font-family: googleFont;
     color:black;
     text-align: center;
-    background-image: url("images/bg-3.svg");
 }
 
 h1{
@@ -20,7 +19,7 @@ ul{
     list-style: none;
 }
 
-#row{
+#discussion-container{
     text-align: left;
     border-color: black;
     border-radius: 10px;
@@ -32,11 +31,11 @@ ul{
 }
 
 #content {
-
+	min-height: 100vh;
 }
 
 #first-page{
-   background-color: #E8E6F7;
+   background-color: #F4F8FD;
    box-shadow: 10px 10px 5px #888;
     margin-top: 15%;
     min-height: 70vh;
@@ -126,7 +125,8 @@ ul{
 /* CSS to Create Interactive Nav Bar */
  
 #navigation-bar{
-    background-color: #C9D6D8;
+    background-color: #e7eff9;
+    background-image: linear-gradient(315deg, #e7eff9 0%, #cfd6e6 74%);
     color: black;
     position: fixed;
     top: 0;

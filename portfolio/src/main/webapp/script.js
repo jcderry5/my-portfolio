@@ -40,7 +40,7 @@ function addToContainer(discussion_log){
 
 	console.log('Adding comments to the discussion-container');
     // Build the list of previous comments
-    const discussionListElement = document.getElementById('row');
+    const discussionListElement = document.getElementById('discussion-container');
     console.log('Outside the forEach loop.');
     console.log(discussion_log);
     discussion_log.forEach((userInput) => {
