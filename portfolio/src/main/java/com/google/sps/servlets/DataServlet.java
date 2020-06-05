@@ -34,10 +34,13 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public final class DataServlet extends HttpServlet {
+    // Set default to 5
 
+    int maxCommentsPosted = 5;
 	@Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         
+    
         // Gather all the user comments and sort them by timestamp
         Query query = new Query("Comments").addSort("timestamp", SortDirection.DESCENDING);
 
@@ -50,11 +53,10 @@ public final class DataServlet extends HttpServlet {
             long id = entity.getKey().getId();
             String username = (String) entity.getProperty("userName");
             String comment = (String) entity.getProperty("userComment");
-            long timestamp = (long) entity.getProperty("timestamp");
-                
-            // Limit amount of comments
+            long timestamp = (long) entity.getProperty("timestamp");    
+            // Limit amount of comments that will be shown to 4
             count++;    
-            if(count < 4){
+            if(count < maxCommentsPosted){
                 Task userEntry = new Task(id, username, comment, timestamp);
             	commentsRecord.add(userEntry);
             }
@@ -78,17 +80,44 @@ public final class DataServlet extends HttpServlet {
     	String userComment = request.getParameter("user-comment");
         long timestamp = System.currentTimeMillis();
 
+        // Get max number of comments to show 
+        maxCommentsPosted = getMaxComments(request);
+
         // Add Input to the Master list of User Comments
         Entity inputEntity = new Entity("Comments");
         inputEntity.setProperty("userName", userName);
         inputEntity.setProperty("userComment", userComment);
         inputEntity.setProperty("timestamp", timestamp);
 
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        datastore.put(inputEntity);
-
+        // if statement to ensure empty usernames nor usercomments are put into database
+	    if(!inputEntity.getProperty("userName").equals("") || !inputEntity.getProperty("userComment").equals("")){
+        	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        	datastore.put(inputEntity);
+        }
 
         //Redirect back to HTML page
         response.sendRedirect("/discussion.html");
+    }
+
+    private int getMaxComments(HttpServletRequest request) {
+        final int DEFAULT_MAX = 3;
+        String maxNumberString =  request.getParameter("quantity");
+
+        //Convert String to int
+        int maxNumberInt;
+        try {
+        	maxNumberInt = Integer.parseInt(maxNumberString);
+        } catch (NumberFormatException e) {
+        	System.err.println("Could not convert to int: " + maxNumberString);
+        	return DEFAULT_MAX;
+        }
+
+        // Check that the input is greater than 0
+    	if (maxNumberInt < 1) {
+      	    System.err.println("Player choice is out of range: " + maxNumberString);
+      	    return DEFAULT_MAX;
+        }
+
+    	return maxNumberInt;
     }
 }
