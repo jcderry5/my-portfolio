@@ -4,7 +4,7 @@
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//     https://www.apache.org/licenses/LICENSE-2.0
+//   https://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,24 +16,18 @@
  * Fetches stats from the servers and adds them to the DOM.
  */
 function generateDiscussion() {
-  	console.log('Fetching discussion.');
-
-    // fetch() function returns a promise
-    const discussionLogPromise = fetch('/data');
-
-	// When the request is complete, pass the response into parseJSON()
-    discussionLogPromise.then(parseJSON);
+  // fetch() function returns a promise then parse the JSON received
+  fetch('/data').then(parseJson);
 }
 
-
 // This function will handle the response and turn it to json
-function parseJSON(response){
-    // TODO: Parse JSON Received from response
+function parseJson(response){
+  // TODO: Parse JSON Received from response
 }
 
 /** Creates an <li> element containing text. */
 function createListElement(text) {
-	const liElement = document.createElement('li');
-    liElement.innerText = text;
-    return liElement;
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
 }
