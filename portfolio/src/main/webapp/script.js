@@ -76,7 +76,7 @@ function createElement(userInput) {
     const deleteButtonElement = document.createElement('button');
   	deleteButtonElement.innerText = 'Delete';
   	deleteButtonElement.addEventListener('click', () => {
-    	deleteComment(comment);
+    	deleteComment(userInput);
 
     	// Remove the comment from the DOM.
     	commentBody.remove();
