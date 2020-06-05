@@ -45,15 +45,20 @@ public final class DataServlet extends HttpServlet {
         PreparedQuery results = datastore.prepare(query);
 
         List<Task> commentsRecord = new ArrayList<>();
-
+        int count = 0;
         for (Entity entity : results.asIterable()) {
             long id = entity.getKey().getId();
             String username = (String) entity.getProperty("userName");
             String comment = (String) entity.getProperty("userComment");
             long timestamp = (long) entity.getProperty("timestamp");
-
-            Task userEntry = new Task(id, username, comment, timestamp);
-            commentsRecord.add(userEntry);
+                
+            // Limit amount of comments
+            count++;    
+            if(count < 4){
+                Task userEntry = new Task(id, username, comment, timestamp);
+            	commentsRecord.add(userEntry);
+            }
+            
     	}
 
 	    // Create commentsRecord object in json form
