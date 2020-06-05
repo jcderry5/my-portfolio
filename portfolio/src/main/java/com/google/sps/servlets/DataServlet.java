@@ -56,7 +56,7 @@ public final class DataServlet extends HttpServlet {
             long timestamp = (long) entity.getProperty("timestamp");    
             // Limit amount of comments that will be shown to 4
             count++;    
-            if(count < maxCommentsPosted){
+            if(count <= maxCommentsPosted){
                 Task userEntry = new Task(id, username, comment, timestamp);
             	commentsRecord.add(userEntry);
             }
@@ -90,7 +90,7 @@ public final class DataServlet extends HttpServlet {
         inputEntity.setProperty("timestamp", timestamp);
 
         // if statement to ensure empty usernames nor usercomments are put into database
-	    if(!inputEntity.getProperty("userName").equals("") || !inputEntity.getProperty("userComment").equals("")){
+	    if(inputEntity.getProperty("userName")!= null || inputEntity.getProperty("userComment")!= null){
         	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         	datastore.put(inputEntity);
         }
