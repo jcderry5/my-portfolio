@@ -26,7 +26,7 @@ function generateDiscussion() {
 }
 
 
-// This function will handle the response and turn it to json
+/* This function will handle the response and turn it to json */
 function parseJSON(response) {
     console.log('Parse the response into JSON');
 
@@ -35,7 +35,7 @@ function parseJSON(response) {
     discussionLog.then(addToContainer);
 }
 
-// This function will add each comment to the discussion container
+/* This function will add each comment to the discussion container */
 function addToContainer(discussion_log) {
 
 	console.log('Adding comments to the discussion-container');
