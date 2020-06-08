@@ -15,6 +15,7 @@
 package com.google.sps.servlets;
 
 import com.google.sps.data.PortfolioComments;
+import com.google.gson.Gson;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,10 +34,9 @@ public final class DataServlet extends HttpServlet {
   * Takes in hard-coded messages and store them in json
   */
   @Override
-  public void doGet(HttpServletResponse response) throws IOException {
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
   
     PortfolioComments commentsRecord = new PortfolioComments();
-    StringBuilder json = new StringBuilder();
 
     // Add Sample Comments
     commentsRecord.addComment("You rock! Keep on coding!");
@@ -44,27 +44,10 @@ public final class DataServlet extends HttpServlet {
     commentsRecord.addComment("This is dad! Go break some eggs, babygirl.");
 
 	// Create commentsRecord object in json form
-    convertToJson(commentsRecord);
+    String json = new Gson().toJson(commentsRecord);
 
     // Send the JSON as the response
     response.setContentType("application/json;");
-    response.getWriter().println(json.toString());
-  }
-
-  /**
-  * Converts the commentsRecord instance into a JSON string using manual String concatentation.
-  */
-  private void convertToJson(PortfolioComments commentsRecord) {
-    json.append("{")
-    json.append("\"Comment0\": ");
-  	json.append("\"" + commentsRecord.getComment(0) + "\"");
-
-    // loop through all comments in commentsRecord array and concatenate it to json
-    for(int index = 1; index < commentsRecord.getMasterCommentListSize(); index++) {
-      json.append(", ");
-      json.append("\"Comment" + index + "\": ");
-      json.append("\"" + commentsRecord.getComment(index) + "\"");
-    }
-    json.append("}");
+    response.getWriter().println(json);
   }
 }

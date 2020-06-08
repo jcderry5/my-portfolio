@@ -45,7 +45,7 @@ public final class PortfolioComments {
   */
   public String getComment(int index) {
     if(index >= masterCommentList.size() || index < 0) {
-      throws new IndexOutOfBoundsException("There is not a comment at the index");
+      throw new IndexOutOfBoundsException("There is not a comment at the index");
     }
     return masterCommentList.get(index);
   }
