@@ -8,22 +8,16 @@
   </head>
   <body>
     <div id="content">
-        <h1>Discussion Board</h1>
-        <p>This is my website to show a discussion board with the topic of JALYN!</p>
-        
-        
-        <h2> Previous comments </h2>
-        <ul id="prev-comments"></ul>
-
+      <h1>Discussion Board</h1>
+      <p>This is my website to show a discussion board with the topic of JALYN!</p>
+      <h2> Previous comments </h2>
+      <ul id="prev-comments"></ul>
         <form action="/data" method="POST">
-
-                <h2> Comments Below </h2>
-                <input type="text" name="user-comment">
-                <br/><br/>
-                <input type="submit" />
-        
+          <h2> Comments Below </h2>
+          <input type="text" name="user-comment">
+          <br/><br/>
+          <input type="submit" />
         </form>
-
         <button onclick="generateDiscussion()">Generate Discussion!</button>
         <div id="discussion-container"></div>
     </div>
