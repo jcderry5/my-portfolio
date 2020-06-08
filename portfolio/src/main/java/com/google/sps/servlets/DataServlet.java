@@ -28,9 +28,7 @@ public final class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-  
   PortfolioComments commentsRecord = new PortfolioComments();
-
   // Add Sample Comments
   commentsRecord.addComment("You rock! Keep on coding!");
   commentsRecord.addComment("This is momma! You got this girl :-)");
