@@ -13,15 +13,15 @@
 
 package com.google.sps.data;
 
-/** An item on a todo list. */
-public final class Task {
+/** A user's entry in the discussion log. */
+public final class UserEntry {
 
   private final long id;
   private final String userName;
   private final String userComment;
   private final long timestamp;
 
-  public Task(long id, String userName, String userComment, long timestamp) {
+  public UserEntry(long id, String userName, String userComment, long timestamp) {
     this.id = id;
     this.userName = userName;
     this.userComment = userComment;

@@ -21,7 +21,7 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
-import com.google.sps.data.Task;
+import com.google.sps.data.UserEntry;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +47,7 @@ public final class DataServlet extends HttpServlet {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         PreparedQuery results = datastore.prepare(query);
 
-        List<Task> commentsRecord = new ArrayList<>();
+        List<UserEntry> commentsRecord = new ArrayList<>();
         int count = 0;
         for (Entity entity : results.asIterable()) {
             long id = entity.getKey().getId();
@@ -57,7 +57,7 @@ public final class DataServlet extends HttpServlet {
             // Limit amount of comments that will be shown to 4
             count++;    
             if(count <= maxCommentsPosted){
-                Task userEntry = new Task(id, username, comment, timestamp);
+                UserEntry userEntry = new UserEntry(id, username, comment, timestamp);
             	commentsRecord.add(userEntry);
             }
             
