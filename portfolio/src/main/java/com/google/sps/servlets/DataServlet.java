@@ -4,7 +4,7 @@
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//     https://www.apache.org/licenses/LICENSE-2.0
+//   https://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -27,30 +27,28 @@ import java.util.ArrayList;
 @WebServlet("/data")
 public final class DataServlet extends HttpServlet {
 
-	private PortfolioComments commentsRecord = new PortfolioComments();
+  private PortfolioComments commentsRecord = new PortfolioComments();
+  @Override
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // Create commentsRecord object in json form
+    String json = new Gson().toJson(commentsRecord);
+    
+    // Send the JSON as the response
+    response.setContentType("application/json;");
+    response.getWriter().println(json);
 
-	@Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+  }
 
-	    // Create commentsRecord object in json form
-        String json = new Gson().toJson(commentsRecord);
-        
-        // Send the JSON as the response
-        response.setContentType("application/json;");
-        response.getWriter().println(json);
+  /* Receive Any New Inputed Comments from User */
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // Get Input from the Form
+    String userInput = request.getParameter("user-comment");
 
-    }
+    // Add Input to the Master list of User Comments
+    commentsRecord.addComment(userInput);
 
-	/* Receive Any New Inputed Comments from User */
-    @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // Get Input from the Form
-    	String userInput = request.getParameter("user-comment");
-
-        // Add Input to the Master list of User Comments
-        commentsRecord.addComment(userInput);
-
-        //Redirect back to HTML page
-        response.sendRedirect("/discussion.html");
-    }
+    //Redirect back to HTML page
+    response.sendRedirect("/discussion.html");
+  }
 }
