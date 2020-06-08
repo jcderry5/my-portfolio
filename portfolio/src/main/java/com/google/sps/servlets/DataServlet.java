@@ -22,12 +22,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 
-/** Servlet that returns some example content. TODO: modify this file 
-to handle user input instead of hard-coded comments*/
+/**
+* Servlet that returns some example content. TODO: modify this file 
+* to handle user input instead of hard-coded comments
+*/
 @WebServlet("/data")
 public final class DataServlet extends HttpServlet {
 
-  /** Takes in hard-coded messages and store them in json **/
+  /**
+  * Takes in hard-coded messages and store them in json
+  */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
   

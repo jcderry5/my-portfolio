@@ -26,7 +26,9 @@ function generateDiscussion() {
 }
 
 
-/* This function will handle the response and turn it to json */
+/** 
+* This function will handle the response and turn it to json
+*/
 function parseJSON(response) {
     console.log('Parse the response into JSON');
 
@@ -35,7 +37,9 @@ function parseJSON(response) {
     discussionLog.then(addToContainer);
 }
 
-/* This function will add each comment to the discussion container */
+/**
+* This function will add each comment to the discussion container
+*/
 function addToContainer(discussion_log) {
 
 	console.log('Adding comments to the discussion-container');
@@ -50,7 +54,9 @@ function addToContainer(discussion_log) {
         createListElement('Comment: ' + discussion_log.Comment2));
 }
 
-/** Creates an <li> element containing text. */
+/** 
+* Creates an <li> element containing text. 
+*/
 function createListElement(text) {
 	const liElement = document.createElement('li');
     liElement.innerText = text;
