@@ -33,7 +33,7 @@ public final class DataServlet extends HttpServlet {
   * Takes in hard-coded messages and store them in json
   */
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+  public void doGet(HttpServletResponse response) throws IOException {
   
     PortfolioComments commentsRecord = new PortfolioComments();
     StringBuilder json = new StringBuilder();
