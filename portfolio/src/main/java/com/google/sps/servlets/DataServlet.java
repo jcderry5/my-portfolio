@@ -56,7 +56,7 @@ public final class DataServlet extends HttpServlet {
   	json.append("\"" + commentsRecord.getComment(0) + "\"");
 
     // loop through all comments in commentsRecord array and concatenate it to json
-    for(int index = 1; index < commentsRecord.getMasterCommentListSize(); index++){
+    for(int index = 1; index < commentsRecord.getMasterCommentListSize(); index++) {
       json.append(", ");
       json.append("\"Comment" + index + "\": ");
       json.append("\"" + commentsRecord.getComment(index) + "\"");
