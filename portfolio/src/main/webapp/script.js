@@ -21,21 +21,22 @@ function generateDiscussion() {
     // fetch() function returns a promise
     const discussionLogPromise = fetch('/data');
 
-	// When the request is complete, pass the response into parseJSON()
-    discussionLogPromise.then(parseJSON);
+	// When the request is complete, pass the response into convertToJson()
+    discussionLogPromise.then(convertToJson);
 }
 
-
-// This function will handle the response and turn it to json
-function parseJSON(response){
-    console.log('Parse the response into JSON');
-
+/**
+* This function will convert the response to JSON and pass json
+* to the addToContainer function
+*/
+function convertToJson(response){
     const discussionLog = response.json();
-
     discussionLog.then(addToContainer);
 }
 
-// This function will add each comment to the discussion container
+/*
+* This function will add each comment to the discussion container
+*/
 function addToContainer(discussion_log){
 
 	console.log('Adding comments to the discussion-container');
@@ -49,7 +50,9 @@ function addToContainer(discussion_log){
     
 }
 
-/** Creates an <li> element containing text. */
+/** 
+* Creates an <li> element containing text. 
+*/
 function createListElement(text) {
 	const liElement = document.createElement('li');
     liElement.innerText = text;
