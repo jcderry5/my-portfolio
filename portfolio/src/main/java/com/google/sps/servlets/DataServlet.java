@@ -81,6 +81,7 @@ public final class DataServlet extends HttpServlet {
       	commentsRecord.add(userEntry);
       }
   	}
+      return commentsRecord;
   }
 
   /*
