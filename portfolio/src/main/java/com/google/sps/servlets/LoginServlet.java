@@ -34,21 +34,33 @@ public class LoginServlet extends HttpServlet {
     * If user is logged in allow them to pick either log out or got to comments page
     * If the user is not logged in, show them a button to go log in at
     */
+    
     if (userService.isUserLoggedIn()) {
-      String userEmail = userService.getCurrentUser().getEmail();
-      String urlToRedirectToAfterUserLogsOut = "/login";
-      String logoutUrl = userService.createLogoutURL(urlToRedirectToAfterUserLogsOut);
-      String discussionUrl = "/discussion.html";
+        response.getWriter().println("true");
+    //   String userEmail = userService.getCurrentUser().getEmail();
+    //   String urlToRedirectToAfterUserLogsOut = "/login";
+    //   String logoutUrl = userService.createLogoutURL(urlToRedirectToAfterUserLogsOut);
+    //   String discussionUrl = "/discussion.html";
 
-      response.getWriter().println("<p>Hello " + userEmail + "!</p>");
-      response.getWriter().println("<p>Logout <a href=\"" + logoutUrl + "\">here</a>.</p>");
-      response.getWriter().println("<p>Discussion <a href=\"" + discussionUrl + "\">here</a>.</p>");
+    //   response.getWriter().println("<p>Hello " + userEmail + "!</p>");
+    //   response.getWriter().println("<p>Logout <a href=\"" + logoutUrl + "\">here</a>.</p>");
+    //   response.getWriter().println("<p>Discussion <a href=\"" + discussionUrl + "\">here</a>.</p>");
     } else {
-      String urlToRedirectToAfterUserLogsIn = "/login";
-      String loginUrl = userService.createLoginURL(urlToRedirectToAfterUserLogsIn);
+        response.getWriter().println("false");
+    //   String urlToRedirectToAfterUserLogsIn = "/login";
+    //   String loginUrl = userService.createLoginURL(urlToRedirectToAfterUserLogsIn);
       
-      response.getWriter().println("<p>Hello Stranger.</p>");
-      response.getWriter().println("<p>Login <a href=\"" + loginUrl + "\">here</a>.</p>");
+    //   response.getWriter().println("<p>Hello Stranger.</p>");
+    //   response.getWriter().println("<p>Login <a href=\"" + loginUrl + "\">here</a>.</p>");
     }
   }
+
+//   @Override
+//   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+//     UserService userService = UserServiceFactory.getUserService();
+//     if(!userService.isLoggedIn()){
+//         response.sendRedirect("/discussion.html");
+//         return;
+//     }
+//   }
 }

@@ -12,6 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+function checkIfLoggedIn() {
+    console.log('Checking if the user is logged in');
+
+    fetch('/login').then(response => response.text()).then((loginStatus) => {
+        console.log(loginStatus);
+  });
+
+    //generateDiscussion();
+}
+
 /**
  * Fetches stats from the servers and adds them to the DOM.
  */
