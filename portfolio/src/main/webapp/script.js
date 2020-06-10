@@ -15,11 +15,10 @@
 function checkIfLoggedIn() {
     console.log('Checking if the user is logged in');
 
+    
     fetch('/login').then(response => response.text()).then((loginStatus) => {
-        console.log(loginStatus);
+      console.log(loginStatus);
   });
-
-    //generateDiscussion();
 }
 
 /**
