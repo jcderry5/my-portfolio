@@ -28,15 +28,12 @@ import java.util.ArrayList;
 */
 @WebServlet("/data")
 public final class DataServlet extends HttpServlet {
-
   /**
-  * Takes in hard-coded messages and store them in json
+  * Take in hard-coded messages written by the developer and store them in json
   */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-  
     ArrayList<String> commentsRecord = new ArrayList<>();
-
     // Add Sample Comments
     commentsRecord.add("You rock! Keep on coding!");
     commentsRecord.add("This is momma! You got this girl :-)");
