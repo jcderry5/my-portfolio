@@ -14,7 +14,6 @@
 
 package com.google.sps.servlets;
 
-import com.google.sps.data.PortfolioComments;
 import com.google.gson.Gson;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
@@ -36,12 +35,12 @@ public final class DataServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
   
-    PortfolioComments commentsRecord = new PortfolioComments();
+    ArrayList<String> commentsRecord = new ArrayList<>();
 
     // Add Sample Comments
-    commentsRecord.addComment("You rock! Keep on coding!");
-    commentsRecord.addComment("This is momma! You got this girl :-)");
-    commentsRecord.addComment("This is dad! Go break some eggs, babygirl.");
+    commentsRecord.add("You rock! Keep on coding!");
+    commentsRecord.add("This is momma! You got this girl :-)");
+    commentsRecord.add("This is dad! Go break some eggs, babygirl.");
 
 	// Create commentsRecord object in json form
     String json = new Gson().toJson(commentsRecord);

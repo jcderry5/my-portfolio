@@ -33,6 +33,7 @@ function parseJSON(response) {
     console.log('Parse the response into JSON');
 
     const discussionLog = response.json();
+    console.log(discussionLog);
 
     discussionLog.then(addToContainer);
 }
@@ -47,11 +48,11 @@ function addToContainer(discussion_log) {
     const discussionListElement = document.getElementById('discussion-container');
     discussionListElement.innerHTML = '';
     discussionListElement.appendChild(
-        createListElement('Comment: ' + discussion_log.Comment0));
+        createListElement('Comment: ' + discussion_log[0]));
     discussionListElement.appendChild(
-        createListElement('Comment: ' + discussion_log.Comment1));
+        createListElement('Comment: ' + discussion_log[1]));
     discussionListElement.appendChild(
-        createListElement('Comment: ' + discussion_log.Comment2));
+        createListElement('Comment: ' + discussion_log[2]));
 }
 
 /** 
