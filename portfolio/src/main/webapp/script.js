@@ -16,23 +16,20 @@
  * Fetches stats from the servers and adds them to the DOM.
  */
 function generateDiscussion() {
-    console.log('Fetching discussion.');
-
-    // fetch() function returns a promise
-    const discussionLogPromise = fetch('/data');
-
+  console.log('Fetching discussion.');
+  // fetch() function returns a promise
+  const discussionLogPromise = fetch('/data');
   // When the request is complete, pass the response into parseJSON()
-    discussionLogPromise.then(parseJson);
+  discussionLogPromise.then(parseJson);
 }
-
 
 /** 
 * This function will handle the response and turn it to json
 */
 function parseJson(response) {
-    console.log('Parse the response into JSON');
-    const discussionLog = response.json();
-    discussionLog.then(addToContainer);
+  console.log('Parse the response into JSON');
+  const discussionLog = response.json();
+  discussionLog.then(addToContainer);
 }
 
 /**

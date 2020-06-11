@@ -38,10 +38,8 @@ public final class DataServlet extends HttpServlet {
     commentsRecord.add("You rock! Keep on coding!");
     commentsRecord.add("This is momma! You got this girl :-)");
     commentsRecord.add("This is dad! Go break some eggs, babygirl.");
-
 	// Create commentsRecord object in json form
     String json = new Gson().toJson(commentsRecord);
-
     // Send the JSON as the response
     response.setContentType("application/json;");
     response.getWriter().println(json);
