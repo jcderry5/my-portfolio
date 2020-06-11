@@ -24,7 +24,6 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
-import com.google.sps.data.UserLogin;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,53 +39,28 @@ public class LoginServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query("User").addSort("timestamp",SortDirection.DESCENDING);
-    PreparedQuery results = datastore.prepare(query);
-
-    List<UserLogin> loggedInRecord = collectLoggedInRecord(results);
-    
-    response.setContentType("text/html");
-
     UserService userService = UserServiceFactory.getUserService();
-    String json = new Gson().toJson(loggedInRecord);
     
-    response.getWriter().println(json);
+    /**
+    * If user is logged in allow them to pick either log out or got to comments page
+    * If the user is not logged in, show them a button to go log in at
+    */
     
-    
-  }
+    if (userService.isUserLoggedIn()) {
+      String userEmail = userService.getCurrentUser().getEmail();
+      String urlToRedirectToAfterUserLogsOut = "/login";
+      String logoutUrl = userService.createLogoutURL(urlToRedirectToAfterUserLogsOut);
+      String discussionUrl = "/discussion.html";
 
-  private List collectLoggedInRecord(PreparedQuery results){
-      List <UserLogin> loggedInRecord = new ArrayList<>();
-      for(Entity entity : results.asIterable()) {
-        long id = entity.getKey().getId();
-        String username = (String) entity.getProperty("userName");
-        String email = (String) entity.getProperty("userEmail");
-        long timestamp = (long) entity.getProperty("timestamp");
-        boolean loggedIn = (boolean) entity.getProperty("loggedIn");
-      }
-      return loggedInRecord;
-  }
-
-  @Override
-  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    UserService userService = UserServiceFactory.getUserService();
-    if(!userService.isUserLoggedIn()){
-        response.sendRedirect("/login");
-        return;
+      response.getWriter().println("<p>Hello " + userEmail + "!</p>");
+      response.getWriter().println("<p>Logout <a href=\"" + logoutUrl + "\">here</a>.</p>");
+      response.getWriter().println("<p>Discussion <a href=\"" + discussionUrl + "\">here</a>.</p>");
+    } else {
+      String urlToRedirectToAfterUserLogsIn = "/login";
+      String loginUrl = userService.createLoginURL(urlToRedirectToAfterUserLogsIn);
+      
+      response.getWriter().println("<p>Hello Stranger.</p>");
+      response.getWriter().println("<p>Login <a href=\"" + loginUrl + "\">here</a>.</p>");
     }
-
-    String userEmail = userService.getCurrentUser().getEmail();
-    long timestamp = System.currentTimeMillis();
-    
-    Entity userEntity = new Entity("User");
-    userEntity.setProperty("useremail", userEmail);
-    userEntity.setProperty("timestamp", timestamp);
-    userEntity.setProperty("loggedIn", true);
-    datastore.put(userEntity);
-
-    response.sendRedirect("/login");
-
   }
-  
-
 }

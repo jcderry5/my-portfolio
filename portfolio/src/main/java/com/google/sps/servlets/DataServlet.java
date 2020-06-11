@@ -70,18 +70,20 @@ public final class DataServlet extends HttpServlet {
     * to be posted on website until they reach the requested number of comments
     */
     for (Entity entity : results.asIterable()) {
+      
       count++;
       long id = entity.getKey().getId();
       String username = (String) entity.getProperty("userName");
       String comment = (String) entity.getProperty("userComment");
       long timestamp = (long) entity.getProperty("timestamp");
+      boolean loggedIn = (boolean) entity.getProperty("loggedIn");
       // Only add to the list if you have yet to reach the number of comments requested 
       if(count <= maxCommentsPosted){
-        UserEntry userEntry = new UserEntry(id, username, comment, timestamp);
+        UserEntry userEntry = new UserEntry(id, username, comment, timestamp, loggedIn);
       	commentsRecord.add(userEntry);
       }
   	}
-      return commentsRecord;
+    return commentsRecord;
   }
 
   /*
@@ -93,6 +95,7 @@ public final class DataServlet extends HttpServlet {
     String userName = request.getParameter("user-name");
   	String userComment = request.getParameter("user-comment");
     long timestamp = System.currentTimeMillis();
+    boolean loggedIn = true;
 
     // Get max number of comments to show 
     maxCommentsPosted = getMaxComments(request);
@@ -102,6 +105,7 @@ public final class DataServlet extends HttpServlet {
     inputEntity.setProperty("userName", userName);
     inputEntity.setProperty("userComment", userComment);
     inputEntity.setProperty("timestamp", timestamp);
+    inputEntity.setProperty("loggedIn", loggedIn);
 
     // if statement to ensure empty usernames nor usercomments are put into database
 	if(inputEntity.getProperty("userName")!= null || inputEntity.getProperty("userComment")!= null){

@@ -20,11 +20,13 @@ public final class UserEntry {
   private final String userName;
   private final String userComment;
   private final long timestamp;
+  private final boolean loggedIn;
 
-  public UserEntry(long id, String userName, String userComment, long timestamp) {
+  public UserEntry(long id, String userName, String userComment, long timestamp, boolean loggedIn) {
     this.id = id;
     this.userName = userName;
     this.userComment = userComment;
     this.timestamp = timestamp;
+    this.loggedIn = loggedIn;
   }
 }

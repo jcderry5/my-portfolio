@@ -16,8 +16,12 @@ function checkIfLoggedIn() {
     console.log('Checking if the user is logged in');
 
     
-    fetch('/login').then(response => response.text()).then((loginStatus) => {
+    fetch('/data').then(response => response.json()).then((loginStatus) => {
       console.log(loginStatus);
+      loginStatus.forEach((userInput) => {
+        console.log('Inside the forEach loop.');
+        console.log(userInput.loggedIn);
+    })
   });
 }
 
@@ -42,6 +46,17 @@ function parseJSON(response){
     const discussionLog = response.json();
 
     discussionLog.then(addToContainer);
+}
+
+// Check if a userExists that is loggedIn before adding it to container
+function loggedInUser(discussion_log){
+    var loggedInFound = false;
+    discussion_log.forEach((userInput) => {
+        loggedInFound = loggedInFound || userInput.loggedIn;
+    });
+    if(loggedInFound){
+        addToContainer(discussion_log);
+    }
 }
 
 // This function will add each comment to the discussion container
