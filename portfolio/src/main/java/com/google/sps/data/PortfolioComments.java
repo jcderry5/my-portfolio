@@ -14,13 +14,13 @@
 
 package com.google.sps.data;
 
-import java.util.ArrayList;
+import java.util.List;
 
 
 /** Class containing server statistics. */
 public final class PortfolioComments {
 
-	private final ArrayList<String> masterCommentList = new ArrayList<>();
+	private final List<String> masterCommentList = new List<>();
 
 	public PortfolioComments() {
         addComment("This is the first comment in masterCommentList");

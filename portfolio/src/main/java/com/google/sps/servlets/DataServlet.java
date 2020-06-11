@@ -28,11 +28,11 @@ public final class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-  PortfolioComments commentsRecord = new PortfolioComments();
-  // Add Sample Comments
-  commentsRecord.addComment("You rock! Keep on coding!");
-  commentsRecord.addComment("This is momma! You got this girl :-)");
-  commentsRecord.addComment("This is dad! Go break some eggs, babygirl.");
+    ArrayList<String> commentsRecord = new PortfolioComments();
+    // Add Sample Comments
+    commentsRecord.add("You rock! Keep on coding!");
+    commentsRecord.add("This is momma! You got this girl :-)");
+    commentsRecord.add("This is dad! Go break some eggs, babygirl.");
 
   // TODO: Put Each Comment in JSON Form and Print it
   }
@@ -41,6 +41,6 @@ public final class DataServlet extends HttpServlet {
   * Converts the commentsRecord instance into a JSON string using manual String concatentation.
   */
   private String convertToJson(PortfolioComments commentsRecord) {
-	  // TODO: Form String in JSON form using String concatentation
+	// TODO: Form String in JSON form using String concatentation
   }
 }
