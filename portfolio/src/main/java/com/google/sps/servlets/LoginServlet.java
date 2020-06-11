@@ -36,26 +36,30 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginServlet extends HttpServlet {
 
   DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+  UserService userService = UserServiceFactory.getUserService();
+  boolean loggedIn;
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    UserService userService = UserServiceFactory.getUserService();
-    
     /**
     * If user is logged in allow them to pick either log out or got to comments page
     * If the user is not logged in, show them a button to go log in at
     */
     
     if (userService.isUserLoggedIn()) {
+      loggedIn = true;
       String userEmail = userService.getCurrentUser().getEmail();
       String urlToRedirectToAfterUserLogsOut = "/login";
       String logoutUrl = userService.createLogoutURL(urlToRedirectToAfterUserLogsOut);
       String discussionUrl = "/discussion.html";
-
-      response.getWriter().println("<p>Hello " + userEmail + "!</p>");
-      response.getWriter().println("<p>Logout <a href=\"" + logoutUrl + "\">here</a>.</p>");
-      response.getWriter().println("<p>Discussion <a href=\"" + discussionUrl + "\">here</a>.</p>");
+      
+      String json = new Gson().toJson(loggedIn);
+      response.getWriter().println(json);
+      //response.getWriter().println("<p>Hello " + userEmail + "!</p>");
+      //response.getWriter().println("<p>Logout <a href=\"" + logoutUrl + "\">here</a>.</p>");
+      //response.getWriter().println("<p>Discussion <a href=\"" + discussionUrl + "\">here</a>.</p>");
     } else {
+      loggedIn = false;
       String urlToRedirectToAfterUserLogsIn = "/login";
       String loginUrl = userService.createLoginURL(urlToRedirectToAfterUserLogsIn);
       

@@ -16,12 +16,11 @@ function checkIfLoggedIn() {
     console.log('Checking if the user is logged in');
 
     
-    fetch('/data').then(response => response.json()).then((loginStatus) => {
+    fetch('/login').then(response => response.json()).then((loginStatus) => {
       console.log(loginStatus);
-      loginStatus.forEach((userInput) => {
-        console.log('Inside the forEach loop.');
-        console.log(userInput.loggedIn);
-    })
+      if(loginStatus){
+          generateDiscussion();
+      }
   });
 }
 
