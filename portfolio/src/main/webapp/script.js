@@ -16,25 +16,22 @@
  * Fetches stats from the servers and adds them to the DOM.
  */
 function generateDiscussion() {
-  	console.log('Fetching discussion.');
+    console.log('Fetching discussion.');
 
     // fetch() function returns a promise
     const discussionLogPromise = fetch('/data');
 
-	// When the request is complete, pass the response into parseJSON()
-    discussionLogPromise.then(parseJSON);
+  // When the request is complete, pass the response into parseJSON()
+    discussionLogPromise.then(parseJson);
 }
 
 
 /** 
 * This function will handle the response and turn it to json
 */
-function parseJSON(response) {
+function parseJson(response) {
     console.log('Parse the response into JSON');
-
     const discussionLog = response.json();
-    console.log(discussionLog);
-
     discussionLog.then(addToContainer);
 }
 
@@ -42,24 +39,22 @@ function parseJSON(response) {
 * This function will add each comment to the discussion container
 */
 function addToContainer(discussion_log) {
-
-	console.log('Adding comments to the discussion-container');
-
-    const discussionListElement = document.getElementById('discussion-container');
-    discussionListElement.innerHTML = '';
-    discussionListElement.appendChild(
-        createListElement('Comment: ' + discussion_log[0]));
-    discussionListElement.appendChild(
-        createListElement('Comment: ' + discussion_log[1]));
-    discussionListElement.appendChild(
-        createListElement('Comment: ' + discussion_log[2]));
+  console.log('Adding comments to the discussion-container');
+  const discussionListElement = document.getElementById('discussion-container');
+  discussionListElement.innerHTML = '';
+  discussionListElement.appendChild(
+    createListElement('Comment: ' + discussion_log[0]));
+  discussionListElement.appendChild(
+    createListElement('Comment: ' + discussion_log[1]));
+  discussionListElement.appendChild(
+    createListElement('Comment: ' + discussion_log[2]));
 }
 
 /** 
 * Creates an <li> element containing text. 
 */
 function createListElement(text) {
-	const liElement = document.createElement('li');
-    liElement.innerText = text;
-    return liElement;
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
 }
