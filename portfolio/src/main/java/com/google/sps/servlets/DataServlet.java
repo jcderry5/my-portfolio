@@ -23,32 +23,31 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
+/** Servlet that both sends userComments to the client and receives + stores inputed User Comments*/
 @WebServlet("/data")
 public final class DataServlet extends HttpServlet {
+  private ArrayList<String> commentsRecord = new ArrayList<>();
+  private String json = "";
+  private String userCommentId = "user-comment";
+  private String discussionPageLink = "/discussion.html";
 
-  private PortfolioComments commentsRecord = new PortfolioComments();
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Create commentsRecord object in json form
-    String json = new Gson().toJson(commentsRecord);
-    
+    json = new Gson().toJson(commentsRecord);
     // Send the JSON as the response
     response.setContentType("application/json;");
     response.getWriter().println(json);
-
   }
 
   /* Receive Any New Inputed Comments from User */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get Input from the Form
-    String userInput = request.getParameter("user-comment");
-
+    String userInput = request.getParameter(userCommentId);
     // Add Input to the Master list of User Comments
     commentsRecord.addComment(userInput);
-
     //Redirect back to HTML page
-    response.sendRedirect("/discussion.html");
+    response.sendRedirect(discussionPageLink);
   }
 }

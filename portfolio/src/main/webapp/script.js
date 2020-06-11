@@ -16,42 +16,33 @@
  * Fetches stats from the servers and adds them to the DOM.
  */
 function generateDiscussion() {
-  	console.log('Fetching discussion.');
-
-    // fetch() function returns a promise
-    const discussionLogPromise = fetch('/data');
-
-	// When the request is complete, pass the response into parseJSON()
-    discussionLogPromise.then(parseJSON);
+  console.log('Fetching discussion.');
+  // fetch() function returns a promise
+  const discussionLogPromise = fetch('/data');
+  // When the request is complete, pass the response into parseJSON()
+  discussionLogPromise.then(parseJson);
 }
 
-
 // This function will handle the response and turn it to json
-function parseJSON(response){
-    console.log('Parse the response into JSON');
-
-    const discussionLog = response.json();
-
-    discussionLog.then(addToContainer);
+function parseJson(response){
+  console.log('Parse the response into JSON');
+  const discussionLog = response.json();
+  discussionLog.then(addToContainer);
 }
 
 // This function will add each comment to the discussion container
 function addToContainer(discussion_log){
-
-	console.log('Adding comments to the discussion-container');
-
-    // Build the list of previous comments
-    const discussionListElement = document.getElementById('prev-comments');
-    discussion_log.masterCommentList.forEach((line) =>
-        discussionListElement.appendChild(createListElement(line))
-    );
-    
-    
+  console.log('Adding comments to the discussion-container');
+  // Build the list of previous comments
+  const discussionListElement = document.getElementById('prev-comments');
+  discussion_log.masterCommentList.forEach((line) =>
+    discussionListElement.appendChild(createListElement(line))
+  );
 }
 
 /** Creates an <li> element containing text. */
 function createListElement(text) {
-	const liElement = document.createElement('li');
-    liElement.innerText = text;
-    return liElement;
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
 }
