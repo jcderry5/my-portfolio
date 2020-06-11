@@ -14,7 +14,6 @@
 
 package com.google.sps.servlets;
 
-import com.google.sps.data.PortfolioComments;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,7 +27,7 @@ public final class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    ArrayList<String> commentsRecord = new PortfolioComments();
+    ArrayList<String> commentsRecord = new ArrayList<>();
     // Add Sample Comments
     commentsRecord.add("You rock! Keep on coding!");
     commentsRecord.add("This is momma! You got this girl :-)");
@@ -40,7 +39,9 @@ public final class DataServlet extends HttpServlet {
   /**
   * Converts the commentsRecord instance into a JSON string using manual String concatentation.
   */
-  private String convertToJson(PortfolioComments commentsRecord) {
+  private String convertToJson(ArrayList<String> commentsRecord) {
 	// TODO: Form String in JSON form using String concatentation
+    String json = "";
+    return json;
   }
 }
