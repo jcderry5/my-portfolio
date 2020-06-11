@@ -18,7 +18,6 @@
 function generateDiscussion() {
   // fetch() function returns a promise
   const discussionLogPromise = fetch('/data');
-
   // When the request is complete, pass the response into convertToJson()
   discussionLogPromise.then(convertToJson);
 }

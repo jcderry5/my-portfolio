@@ -26,26 +26,17 @@ import java.util.ArrayList;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public final class DataServlet extends HttpServlet {
-
-	@Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        
-        PortfolioComments commentsRecord = new PortfolioComments();
-
-        // Add Sample Comments
-        commentsRecord.addComment("You rock! Keep on coding!");
-        commentsRecord.addComment("This is momma! You got this girl :-)");
-        commentsRecord.addComment("This is dad! Go break some eggs, babygirl.");
-
-	    // Create commentsRecord object in json form
-        
-        
-        //String json = convertToJson(commentsRecord);
-        String json = new Gson().toJson(commentsRecord);
-        
-        
-        // Send the JSON as the response
-        response.setContentType("application/json;");
-        response.getWriter().println(json);
-    }
+  @Override
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException { 
+    ArrayList<String> commentsRecord = new ArrayList<>();
+    // Add Sample Comments
+    commentsRecord.add("You rock! Keep on coding!");
+    commentsRecord.add("This is momma! You got this girl :-)");
+    commentsRecord.add("This is dad! Go break some eggs, babygirl.");
+	//Create commentsRecord object in json form
+    String json = new Gson().toJson(commentsRecord);
+    // Send the JSON as the response
+    response.setContentType("application/json;");
+    response.getWriter().println(json);
+  }
 }
