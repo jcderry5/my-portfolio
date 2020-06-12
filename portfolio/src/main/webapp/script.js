@@ -14,14 +14,15 @@
 
 function checkIfLoggedIn() {
     console.log('Checking if the user is logged in');
-
-    
-    fetch('/login').then(response => response.json()).then((loginStatus) => {
+    fetch('/check-login').then(response => response.json()).then((loginStatus) => {
       console.log(loginStatus);
       if(loginStatus){
           generateDiscussion();
+          loadNavBarLogin();
+      } else {
+          redirectUserToLogin();
       }
-  });
+    });
 }
 
 /**
@@ -37,7 +38,6 @@ function generateDiscussion() {
     discussionLogPromise.then(parseJSON);
 }
 
-
 // This function will handle the response and turn it to json
 function parseJSON(response){
     console.log('Parse the response into JSON');
@@ -45,17 +45,6 @@ function parseJSON(response){
     const discussionLog = response.json();
 
     discussionLog.then(addToContainer);
-}
-
-// Check if a userExists that is loggedIn before adding it to container
-function loggedInUser(discussion_log){
-    var loggedInFound = false;
-    discussion_log.forEach((userInput) => {
-        loggedInFound = loggedInFound || userInput.loggedIn;
-    });
-    if(loggedInFound){
-        addToContainer(discussion_log);
-    }
 }
 
 // This function will add each comment to the discussion container
@@ -121,4 +110,27 @@ function deleteComment(comment) {
   const params = new URLSearchParams();
   params.append('id', comment.id);
   fetch('/delete-comment', {method: 'POST', body: params});
+}
+
+function loadNavButtons(){
+  console.log('Checking loginStatus for Nav buttons');
+    fetch('/check-login').then(response => response.json()).then((loginStatus) => {
+      console.log(loginStatus);
+      if(loginStatus){
+          loadNavBarLogin();
+      } else {
+          redirectUserToLogin();
+      }
+    });
+}
+
+function loadNavBarLogin(){
+    const navBarLogoutElement = document.getElementById('login-or-logout');
+    navBarLogoutElement.innerText = 'Logout';
+    console.log('I\'m in the loadNavBarLogin function');
+    navBarLogoutElement.href = "/login";
+}
+
+function loadNavBarLogout(){
+    const navBarLogoutElement = document.getElementById('login-or-logout');
 }
