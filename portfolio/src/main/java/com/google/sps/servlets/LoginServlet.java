@@ -35,7 +35,8 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginServlet extends HttpServlet {
   DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
   UserService userService = UserServiceFactory.getUserService();
-  boolean loggedIn;
+  String homePageUrl = "/index.html";
+  String discussionUrl = "/discussion.html";
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -47,15 +48,17 @@ public class LoginServlet extends HttpServlet {
       String userEmail = userService.getCurrentUser().getEmail();
       String urlToRedirectToAfterUserLogsOut = "/login";
       String logoutUrl = userService.createLogoutURL(urlToRedirectToAfterUserLogsOut);
-      String discussionUrl = "/discussion.html";
+      
       response.getWriter().println("<p>Hello " + userEmail + "!</p>");
       response.getWriter().println("<p>Logout <a href=\"" + logoutUrl + "\">here</a>.</p>");
       response.getWriter().println("<p>Discussion <a href=\"" + discussionUrl + "\">here</a>.</p>");
+      response.getWriter().println("<p>Home Page <a href=\"" + homePageUrl + "\">here</a>.</p>");
     } else {
       String urlToRedirectToAfterUserLogsIn = "/login";
       String loginUrl = userService.createLoginURL(urlToRedirectToAfterUserLogsIn);
       response.getWriter().println("<p>Hello Stranger.</p>");
       response.getWriter().println("<p>Login <a href=\"" + loginUrl + "\">here</a>.</p>");
+      response.getWriter().println("<p>Home Page <a href=\"" + homePageUrl + "\">here</a>.</p>");
     }
   }
 }

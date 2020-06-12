@@ -17,10 +17,7 @@ function checkIfLoggedIn() {
   fetch('/check-login').then(response => response.json()).then((loginStatus) => {
     console.log(loginStatus);
     if(loginStatus){
-    generateDiscussion();
-    loadNavBarLogin();
-    } else {
-    redirectUserToLogin();
+      generateDiscussion();
     }
   });
 }
@@ -29,12 +26,10 @@ function checkIfLoggedIn() {
  * Fetches stats from the servers and adds them to the DOM.
  */
 function generateDiscussion() {
-  	console.log('Fetching discussion.');
-
+  console.log('Fetching discussion.');
   // fetch() function returns a promise
   const discussionLogPromise = fetch('/data');
-
-	// When the request is complete, pass the response into parseJSON()
+  // When the request is complete, pass the response into parseJSON()
   discussionLogPromise.then(parseJSON);
 }
 
@@ -65,35 +60,28 @@ function createElement(userInput) {
   //Printing userInput for testing purposes
   console.log('Inside the createElement function');
   console.log(userInput);
-
   // Create Body Element that userName and userComment will be in
   const commentBody = document.createElement('div');
   commentBody.className = 'comment-body';
-
-	// Create Title Element that contains the userName
-	const titleElement = document.createElement('h2');
+  // Create Title Element that contains the userName
+  const titleElement = document.createElement('h2');
   titleElement.className = 'user-title';
   titleElement.innerText = userInput.userName;
-
-	// Create Comment Element that Comment will go in
+  // Create Comment Element that Comment will go in
   const commentElement = document.createElement('p');
   commentElement.className = 'comment-box';
   commentElement.innerText = userInput.userComment;
 
-	// Create a button element that allows the user to delete comment
-  // TODO: Make functioning
+  // Create a button element that allows the user to delete comment
   const deleteButtonElement = document.createElement('button');
-  	deleteButtonElement.innerText = 'Delete';
-  	deleteButtonElement.addEventListener('click', () => {
+  deleteButtonElement.innerText = 'Delete';
+  deleteButtonElement.addEventListener('click', () => {
   	deleteComment(comment);
-
   	// Remove the comment from the DOM.
   	commentBody.remove();
-  	});
-	
+  });
   // Add a horizontal line break between comments
   const horizLineElement = document.createElement('hr');
-
   //Append all children of the comment body to comment body
   commentBody.appendChild(titleElement);
   commentBody.appendChild(commentElement);
@@ -119,9 +107,9 @@ function loadNavButtons(){
   fetch('/check-login').then(response => response.json()).then((loginStatus) => {
     const navBarLoginLogoutElement = document.getElementById('login-or-logout');
     if(loginStatus){
-  navBarLoginLogoutElement.innerText = 'Logout';
+      navBarLoginLogoutElement.innerText = 'Logout';
     } else {
-  navBarLoginLogoutElement.innerText = 'Login';
+      navBarLoginLogoutElement.innerText = 'Login';
     }
     navBarLoginLogoutElement.href = "/login";
   });
