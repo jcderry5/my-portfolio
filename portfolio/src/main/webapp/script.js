@@ -119,7 +119,7 @@ function loadNavButtons(){
       if(loginStatus){
           loadNavBarLogin();
       } else {
-          
+          loadNavBarLogout();
       }
     });
 }
@@ -135,5 +135,5 @@ function loadNavBarLogout(){
     const navBarLoginElement = document.getElementById('login-or-logout');
     navBarLoginElement.innerText = 'Login';
     console.log('I\'m in the loadNavBarLogout function');
-    navBarLogoutElement.href = "/login";
+    navBarLoginElement.href = "/login";
 }
