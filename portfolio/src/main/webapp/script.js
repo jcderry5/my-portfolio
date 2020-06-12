@@ -4,7 +4,7 @@
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//     https://www.apache.org/licenses/LICENSE-2.0
+//   https://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,16 +13,16 @@
 // limitations under the License.
 
 function checkIfLoggedIn() {
-    console.log('Checking if the user is logged in');
-    fetch('/check-login').then(response => response.json()).then((loginStatus) => {
-      console.log(loginStatus);
-      if(loginStatus){
-          generateDiscussion();
-          loadNavBarLogin();
-      } else {
-          redirectUserToLogin();
-      }
-    });
+  console.log('Checking if the user is logged in');
+  fetch('/check-login').then(response => response.json()).then((loginStatus) => {
+    console.log(loginStatus);
+    if(loginStatus){
+    generateDiscussion();
+    loadNavBarLogin();
+    } else {
+    redirectUserToLogin();
+    }
+  });
 }
 
 /**
@@ -31,78 +31,75 @@ function checkIfLoggedIn() {
 function generateDiscussion() {
   	console.log('Fetching discussion.');
 
-    // fetch() function returns a promise
-    const discussionLogPromise = fetch('/data');
+  // fetch() function returns a promise
+  const discussionLogPromise = fetch('/data');
 
 	// When the request is complete, pass the response into parseJSON()
-    discussionLogPromise.then(parseJSON);
+  discussionLogPromise.then(parseJSON);
 }
 
 // This function will handle the response and turn it to json
 function parseJSON(response){
-    console.log('Parse the response into JSON');
+  console.log('Parse the response into JSON');
 
-    const discussionLog = response.json();
+  const discussionLog = response.json();
 
-    discussionLog.then(addToContainer);
+  discussionLog.then(addToContainer);
 }
 
 // This function will add each comment to the discussion container
 function addToContainer(discussion_log){
-
-	console.log('Adding comments to the discussion-container');
-    // Build the list of previous comments
-    const discussionListElement = document.getElementById('discussion-container');
-    console.log('Outside the forEach loop.');
-    console.log(discussion_log);
-    discussion_log.forEach((userInput) => {
-        console.log('Inside the forEach loop.');
-        discussionListElement.appendChild(createElement(userInput));
-    })
-    
+  console.log('Adding comments to the discussion-container');
+  // Build the list of previous comments
+  const discussionListElement = document.getElementById('discussion-container');
+  console.log('Outside the forEach loop.');
+  console.log(discussion_log);
+  discussion_log.forEach((userInput) => {
+    console.log('Inside the forEach loop.');
+    discussionListElement.appendChild(createElement(userInput));
+  })
 }
 
 /** Creates an <li> element containing text. */
 function createElement(userInput) {
-	
-    //Printing userInput for testing purposes
-    console.log('Inside the createElement function');
-    console.log(userInput);
+  //Printing userInput for testing purposes
+  console.log('Inside the createElement function');
+  console.log(userInput);
 
-    // Create Body Element that userName and userComment will be in
-    const commentBody = document.createElement('div');
-    commentBody.className = 'comment-body';
+  // Create Body Element that userName and userComment will be in
+  const commentBody = document.createElement('div');
+  commentBody.className = 'comment-body';
 
 	// Create Title Element that contains the userName
 	const titleElement = document.createElement('h2');
-    titleElement.className = 'user-title';
-    titleElement.innerText = userInput.userName;
+  titleElement.className = 'user-title';
+  titleElement.innerText = userInput.userName;
 
 	// Create Comment Element that Comment will go in
-    const commentElement = document.createElement('p');
-    commentElement.className = 'comment-box';
-    commentElement.innerText = userInput.userComment;
+  const commentElement = document.createElement('p');
+  commentElement.className = 'comment-box';
+  commentElement.innerText = userInput.userComment;
 
 	// Create a button element that allows the user to delete comment
-    // TODO: Make functioning
-    const deleteButtonElement = document.createElement('button');
+  // TODO: Make functioning
+  const deleteButtonElement = document.createElement('button');
   	deleteButtonElement.innerText = 'Delete';
   	deleteButtonElement.addEventListener('click', () => {
-    	deleteComment(comment);
+  	deleteComment(comment);
 
-    	// Remove the comment from the DOM.
-    	commentBody.remove();
+  	// Remove the comment from the DOM.
+  	commentBody.remove();
   	});
 	
-    // Add a horizontal line break between comments
-    const horizLineElement = document.createElement('hr');
+  // Add a horizontal line break between comments
+  const horizLineElement = document.createElement('hr');
 
-    //Append all children of the comment body to comment body
-    commentBody.appendChild(titleElement);
-    commentBody.appendChild(commentElement);
-    commentBody.appendChild(deleteButtonElement);
-    commentBody.appendChild(horizLineElement);
-    return commentBody;
+  //Append all children of the comment body to comment body
+  commentBody.appendChild(titleElement);
+  commentBody.appendChild(commentElement);
+  commentBody.appendChild(deleteButtonElement);
+  commentBody.appendChild(horizLineElement);
+  return commentBody;
 }
 
 /** Tells the server to delete the comment. */
@@ -112,28 +109,20 @@ function deleteComment(comment) {
   fetch('/delete-comment', {method: 'POST', body: params});
 }
 
+/**
+* Fetch whether or not the user is logged in
+* Send link to either login if they are currently logged out
+* or to logout if they are currently logged in
+ */
 function loadNavButtons(){
   console.log('Checking loginStatus for Nav buttons');
-    fetch('/check-login').then(response => response.json()).then((loginStatus) => {
-      console.log(loginStatus);
-      if(loginStatus){
-          loadNavBarLogin();
-      } else {
-          loadNavBarLogout();
-      }
-    });
-}
-
-function loadNavBarLogin(){
-    const navBarLogoutElement = document.getElementById('login-or-logout');
-    navBarLogoutElement.innerText = 'Logout';
-    console.log('I\'m in the loadNavBarLogin function');
-    navBarLogoutElement.href = "/login";
-}
-
-function loadNavBarLogout(){
-    const navBarLoginElement = document.getElementById('login-or-logout');
-    navBarLoginElement.innerText = 'Login';
-    console.log('I\'m in the loadNavBarLogout function');
-    navBarLoginElement.href = "/login";
+  fetch('/check-login').then(response => response.json()).then((loginStatus) => {
+    const navBarLoginLogoutElement = document.getElementById('login-or-logout');
+    if(loginStatus){
+  navBarLoginLogoutElement.innerText = 'Logout';
+    } else {
+  navBarLoginLogoutElement.innerText = 'Login';
+    }
+    navBarLoginLogoutElement.href = "/login";
+  });
 }

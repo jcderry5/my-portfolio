@@ -45,12 +45,9 @@ public final class DataServlet extends HttpServlet {
     // Gather all the user comments and sort them by timestamp
     Query query = new Query("Comments").addSort("timestamp", SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
-
     List<UserEntry> commentsRecord = collectEntriesToPost(results);
-   
 	// Create commentsRecord object in json form
     String json = new Gson().toJson(commentsRecord);
-    
     // Send the JSON as the response
     response.setContentType("application/json;");
     response.getWriter().println(json);
@@ -62,7 +59,6 @@ public final class DataServlet extends HttpServlet {
   private List collectEntriesToPost(PreparedQuery results){
     // Create list of entities that contain UserEntry objects
     List<UserEntry> commentsRecord = new ArrayList<>();
-
     int count = 0;
     /**
     * For loop through all the stored results
@@ -70,7 +66,6 @@ public final class DataServlet extends HttpServlet {
     * to be posted on website until they reach the requested number of comments
     */
     for (Entity entity : results.asIterable()) {
-      
       count++;
       long id = entity.getKey().getId();
       String username = (String) entity.getProperty("userName");
@@ -85,7 +80,6 @@ public final class DataServlet extends HttpServlet {
   	}
     return commentsRecord;
   }
-
   /*
   * Receive Any New Inputed Comments from User
   */
@@ -96,31 +90,25 @@ public final class DataServlet extends HttpServlet {
   	String userComment = request.getParameter("user-comment");
     long timestamp = System.currentTimeMillis();
     boolean loggedIn = true;
-
     // Get max number of comments to show 
     maxCommentsPosted = getMaxComments(request);
-
     // Add Input to the Master list of User Comments
     Entity inputEntity = new Entity("Comments");
     inputEntity.setProperty("userName", userName);
     inputEntity.setProperty("userComment", userComment);
     inputEntity.setProperty("timestamp", timestamp);
     inputEntity.setProperty("loggedIn", loggedIn);
-
     // if statement to ensure empty usernames nor usercomments are put into database
 	if(inputEntity.getProperty("userName")!= null || inputEntity.getProperty("userComment")!= null){
       DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
       datastore.put(inputEntity);
     }
-
     //Redirect back to HTML page
     response.sendRedirect("/discussion.html");
   }
-
   private int getMaxComments(HttpServletRequest request) {
     final int DEFAULT_MAX = 3;
     String maxNumberString =  request.getParameter("quantity");
-
     //Convert String to int
     int maxNumberInt;
     try {

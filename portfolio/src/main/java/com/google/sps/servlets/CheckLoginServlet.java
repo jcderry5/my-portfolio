@@ -14,7 +14,6 @@
 
 package com.google.sps.servlets;
 
-
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.users.UserService;
@@ -34,7 +33,6 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/check-login")
 public class CheckLoginServlet extends HttpServlet {
-
   DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
   UserService userService = UserServiceFactory.getUserService();
 
