@@ -46,8 +46,8 @@ public final class FindMeetingQuery {
   }
 
   private void sortBusyTimes(Collection<Event> events){
-      Collections.sort(events, TimeRange.ORDER_BY_START);
-      return events;
+    Collections.sort(events, TimeRange.ORDER_BY_START);
+    return events;
   }
 }
 
