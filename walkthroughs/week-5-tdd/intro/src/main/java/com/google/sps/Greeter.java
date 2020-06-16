@@ -18,10 +18,27 @@ package com.google.sps;
  * Utility class for creating greeting messages.
  */
 public class Greeter {
+    final int asciiForUppercaseA = 65;
+    final int asciiForUppercaseZ = 90;
+    final int asciiForLowercaseA = 97;
+    final int asciiForLowercaseZ = 122;
   /**
    * Returns a greeting for the given name.
    */
   public String greet(String name) {
-    return "Hello " + name;
+    return "Hello " + trimName(name);
+  }
+
+  public String trimName(String name){
+      String result = "";
+      for(int index = 0; index < name.length(); index++){
+          char currentChar = name.charAt(index);
+          // Check if the currentChar is a letter based on ascii value
+          if((currentChar >= asciiForUppercaseA && currentChar <= asciiForUppercaseZ) 
+            || (currentChar >= asciiForLowercaseA && currentChar <= asciiForLowercaseZ)){
+              result += currentChar;
+          }
+      }
+      return result;
   }
 }
