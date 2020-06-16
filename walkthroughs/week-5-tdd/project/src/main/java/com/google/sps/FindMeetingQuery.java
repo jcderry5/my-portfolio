@@ -15,9 +15,39 @@
 package com.google.sps;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Comparator;
+import java.util.Iterator;
 
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-    throw new UnsupportedOperationException("TODO: Implement this method.");
+    //throw new UnsupportedOperationException("TODO: Implement this method.");
+    
+    Collection<TimeRange> busyTimes = busyTimes(events);
+
+    System.out.println(busyTimes);
+
+    return busyTimes;
+  }
+
+  private Collection<TimeRange> busyTimes(Collection<Event> events){
+    Collection<TimeRange> busyTimes = new HashSet<>();
+    // Iterate through all the events and collect the TimeRange from all of them
+    Iterator<Event> iterateEvents = events.iterator();
+    while(iterateEvents.hasNext()){
+      Event currentEvent = iterateEvents.next();
+      busyTimes.add(currentEvent.getWhen());
+    }
+    return busyTimes;
+  }
+
+  private void sortBusyTimes(Collection<Event> events){
+      Collections.sort(events, TimeRange.ORDER_BY_START);
+      return events;
   }
 }
+
