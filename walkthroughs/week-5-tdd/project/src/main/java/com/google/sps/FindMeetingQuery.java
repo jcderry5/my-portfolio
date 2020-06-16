@@ -22,32 +22,51 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
     //throw new UnsupportedOperationException("TODO: Implement this method.");
     
-    Collection<TimeRange> busyTimes = busyTimes(events);
-
-    System.out.println(busyTimes);
-
-    return busyTimes;
+    //SortedSet<TimeRange> mandatoryEvents = sortBusyTimes(events, request);
+    List<TimeRange> busyTimeRange = extractTimeRange(events);
+    secondSortAlgo(busyTimeRange);
+    System.out.println(busyTimeRange);
+    
   }
 
-  private Collection<TimeRange> busyTimes(Collection<Event> events){
-    Collection<TimeRange> busyTimes = new HashSet<>();
-    // Iterate through all the events and collect the TimeRange from all of them
-    Iterator<Event> iterateEvents = events.iterator();
-    while(iterateEvents.hasNext()){
-      Event currentEvent = iterateEvents.next();
-      busyTimes.add(currentEvent.getWhen());
+    /**
+  private SortedSet<TimeRange> sortBusyTimes(Collection<Event> events, MeetingRequest request){
+    SortedSet<TimeRange> mandatoryEvents = new TreeSet<>(TimeRange.ORDER_BY_START);
+
+    for(Event currEvent: events){
+        //check to see if any of the attendees are in currEvent
+        for(String currAttendee : currEvent.getAttendee()){
+            if(request.getAttendees().contains(currAttendee)){
+                mandatoryEvents.add(currEvent.getWhen());
+                // if one mandatory attendee is going to a prev. scheduled event, that 
+                // prev. scheduled event's time slot is considered non-available time slot
+                continue currEvent; 
+            }
+        }
+    }
+    return mandatoryEvents;
+  }
+    */
+
+  private List<TimeRange> extractTimeRange(Collection<Event> events){
+    List<TimeRange> busyTimes = new ArrayList<>();
+    Iterator<Event> iterateThroughEvents = events.iterator();
+    while(iterateThroughEvents.hasNext()){
+      Event currEvent = iterateThroughEvents.next();
+      busyTimes.add(currEvent.getWhen());
     }
     return busyTimes;
   }
 
-  private void sortBusyTimes(Collection<Event> events){
-    Collections.sort(events, TimeRange.ORDER_BY_START);
-    return events;
+  private void secondSortAlgo(List<TimeRange> events){
+   Collections.sort(events, TimeRange.ORDER_BY_START);
   }
 }
 
