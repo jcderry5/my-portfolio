@@ -29,31 +29,13 @@ public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
     //throw new UnsupportedOperationException("TODO: Implement this method.");
     
-    //SortedSet<TimeRange> mandatoryEvents = sortBusyTimes(events, request);
     List<TimeRange> busyTimeRange = extractTimeRange(events);
-    secondSortAlgo(busyTimeRange);
-    System.out.println(busyTimeRange);
-    
+    sortTimeRange(busyTimeRange);
+    System.out.println("Busy time range: " + busyTimeRange);
+    List<TimeRange> availableTimes = findAvailableTime(busyTimeRange);
+    System.out.println(availableTimes);
+    return availableTimes;
   }
-
-    /**
-  private SortedSet<TimeRange> sortBusyTimes(Collection<Event> events, MeetingRequest request){
-    SortedSet<TimeRange> mandatoryEvents = new TreeSet<>(TimeRange.ORDER_BY_START);
-
-    for(Event currEvent: events){
-        //check to see if any of the attendees are in currEvent
-        for(String currAttendee : currEvent.getAttendee()){
-            if(request.getAttendees().contains(currAttendee)){
-                mandatoryEvents.add(currEvent.getWhen());
-                // if one mandatory attendee is going to a prev. scheduled event, that 
-                // prev. scheduled event's time slot is considered non-available time slot
-                continue currEvent; 
-            }
-        }
-    }
-    return mandatoryEvents;
-  }
-    */
 
   private List<TimeRange> extractTimeRange(Collection<Event> events){
     List<TimeRange> busyTimes = new ArrayList<>();
@@ -65,8 +47,29 @@ public final class FindMeetingQuery {
     return busyTimes;
   }
 
-  private void secondSortAlgo(List<TimeRange> events){
+  private void sortTimeRange(List<TimeRange> events){
    Collections.sort(events, TimeRange.ORDER_BY_START);
   }
+
+  private List<TimeRange> findAvailableTime(List<TimeRange> sortedBusyTimes){
+    List<TimeRange> availableTimes = new ArrayList<>();
+    int currTimeMarker = TimeRange.START_OF_DAY;
+    int indexOfBusyTimes = 0;
+    if(sortedBusyTimes.size() == 0){
+        availableTimes.add(TimeRange.WHOLE_DAY);
+        return availableTimes;
+    }
+    while(currTimeMarker != TimeRange.END_OF_DAY || indexOfBusyTimes >= sortedBusyTimes.size()){
+      TimeRange currBusyTime = sortedBusyTimes.get(indexOfBusyTimes);
+      int currDurationOfAvailableTime = currBusyTime.start() - currTimeMarker;
+      TimeRange currTR = TimeRange.fromStartDuration(currTimeMarker, currDurationOfAvailableTime);
+      availableTimes.add(currTR);
+      currTimeMarker = currBusyTime.end();
+      indexOfBusyTimes++; // This is where i can work with overlaps
+    }
+    return availableTimes;
+  }
+
+  
 }
 
