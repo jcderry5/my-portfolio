@@ -4,7 +4,7 @@
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//     https://www.apache.org/licenses/LICENSE-2.0
+//   https://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,35 +16,30 @@
  * Fetches stats from the servers and adds them to the DOM.
  */
 function generateDiscussion() {
-  console.log('Fetching discussion.');
   // fetch() function returns a promise
   const discussionLogPromise = fetch('/data');
-  // When the request is complete, pass the response into parseJSON()
-  discussionLogPromise.then(parseJson);
+  // When the request is complete, pass the response into convertToJson()
+  discussionLogPromise.then(convertToJson);
 }
 
-/** 
-* This function will handle the response and turn it to json
+/**
+* This function will convert the response to JSON and pass json
+* to the addToContainer function
 */
-function parseJson(response) {
-  console.log('Parse the response into JSON');
+function convertToJson(response){
   const discussionLog = response.json();
   discussionLog.then(addToContainer);
 }
 
-/**
+/*
 * This function will add each comment to the discussion container
 */
-function addToContainer(discussion_log) {
-  console.log('Adding comments to the discussion-container');
+function addToContainer(discussion_log){
+  // Build the list of previous comments
   const discussionListElement = document.getElementById('discussion-container');
-  discussionListElement.innerHTML = '';
-  discussionListElement.appendChild(
-    createListElement('Comment: ' + discussion_log[0]));
-  discussionListElement.appendChild(
-    createListElement('Comment: ' + discussion_log[1]));
-  discussionListElement.appendChild(
-    createListElement('Comment: ' + discussion_log[2]));
+  discussion_log.masterCommentList.forEach((line) =>
+    discussionListElement.appendChild(createListElement(line))
+  );
 }
 
 /** 

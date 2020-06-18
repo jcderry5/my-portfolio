@@ -14,6 +14,10 @@
 
 package com.google.sps.servlets;
 
+<<<<<<< HEAD
+import com.google.sps.data.PortfolioComments;
+=======
+>>>>>>> master
 import com.google.gson.Gson;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
@@ -28,17 +32,15 @@ import java.util.ArrayList;
 */
 @WebServlet("/data")
 public final class DataServlet extends HttpServlet {
-  /**
-  * Take in hard-coded messages written by the developer and store them in json
-  */
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    ArrayList<String> commentsRecord = new ArrayList<>();
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException { 
+    List<String> commentsRecord = new List<>();
     // Add Sample Comments
     commentsRecord.add("You rock! Keep on coding!");
     commentsRecord.add("This is momma! You got this girl :-)");
     commentsRecord.add("This is dad! Go break some eggs, babygirl.");
-	// Create commentsRecord object in json form
+	
+    //Create commentsRecord object in json form
     String json = new Gson().toJson(commentsRecord);
     // Send the JSON as the response
     response.setContentType("application/json;");
