@@ -19,25 +19,20 @@ import java.util.List;
 
 /** Class containing server statistics. */
 public final class PortfolioComments {
-
 	private final List<String> masterCommentList = new ArrayList<>();
-
 	public PortfolioComments() {
-        addComment("This is the first comment in masterCommentList");
+      addComment("This is the first comment in masterCommentList");
   	}
-
     public void addComment(String comment){
-        masterCommentList.add(comment);
+      masterCommentList.add(comment);
     }
-
 	public String getComment(int index){
-	    if(index >= masterCommentList.size() || index < 0){
-	        throw new IndexOutOfBoundsException("There is not a comment at the index");
-        }
-        return masterCommentList.get(index);
+	  if(index >= masterCommentList.size() || index < 0){
+	    throw new IndexOutOfBoundsException("There is not a comment at the index");
+      }
+      return masterCommentList.get(index);
     }
-
     public int getMasterCommentListSize(){
-        return masterCommentList.size();
+      return masterCommentList.size();
     }
 }
