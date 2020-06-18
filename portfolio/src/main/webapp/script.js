@@ -16,16 +16,40 @@
  * Fetches stats from the servers and adds them to the DOM.
  */
 function generateDiscussion() {
-  // fetch() function returns a promise then parse the JSON received
-  fetch('/data').then(parseJson);
+  console.log('Fetching discussion.');
+  // fetch() function returns a promise
+  const discussionLogPromise = fetch('/data');
+  // When the request is complete, pass the response into parseJSON()
+  discussionLogPromise.then(parseJson);
 }
 
-// This function will handle the response and turn it to json
-function parseJson(response){
-  // TODO: Parse JSON Received from response
+/** 
+* This function will handle the response and turn it to json
+*/
+function parseJson(response) {
+  console.log('Parse the response into JSON');
+  const discussionLog = response.json();
+  discussionLog.then(addToContainer);
 }
 
-/** Creates an <li> element containing text. */
+/**
+* This function will add each comment to the discussion container
+*/
+function addToContainer(discussion_log) {
+  console.log('Adding comments to the discussion-container');
+  const discussionListElement = document.getElementById('discussion-container');
+  discussionListElement.innerHTML = '';
+  discussionListElement.appendChild(
+    createListElement('Comment: ' + discussion_log[0]));
+  discussionListElement.appendChild(
+    createListElement('Comment: ' + discussion_log[1]));
+  discussionListElement.appendChild(
+    createListElement('Comment: ' + discussion_log[2]));
+}
+
+/** 
+* Creates an <li> element containing text. 
+*/
 function createListElement(text) {
   const listElement = document.createElement('li');
   listElement.innerText = text;
