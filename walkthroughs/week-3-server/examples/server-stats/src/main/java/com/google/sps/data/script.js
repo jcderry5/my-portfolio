@@ -19,11 +19,19 @@ function getServerStats() {
   fetch('/server-stats').then(response => response.json()).then((stats) => {
     // stats is an object, not a string, so we have to
     // reference its fields to create HTML content
+<<<<<<< HEAD:walkthroughs/week-3-server/examples/server-stats/src/main/webapp/script.js
 <<<<<<< HEAD
     console.log("The object stats: " + stats);
 =======
     console.log("The object stats" + stats);
 >>>>>>> master
+=======
+<<<<<<< HEAD:walkthroughs/week-3-server/examples/server-stats/src/main/java/com/google/sps/data/script.js
+    console.log("The object stats: " + stats);
+=======
+    console.log("The object stats" + stats);
+>>>>>>> master:walkthroughs/week-3-server/examples/server-stats/src/main/webapp/script.js
+>>>>>>> fd81bc447e9aab91c7f9354e727b4ac9133b8141:walkthroughs/week-3-server/examples/server-stats/src/main/java/com/google/sps/data/script.js
     const statsListElement = document.getElementById('server-stats-container');
     statsListElement.innerHTML = '';
     statsListElement.appendChild(

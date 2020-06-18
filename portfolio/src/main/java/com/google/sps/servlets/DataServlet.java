@@ -14,11 +14,8 @@
 
 package com.google.sps.servlets;
 
-<<<<<<< HEAD
-import com.google.sps.data.PortfolioComments;
-=======
->>>>>>> master
 import com.google.gson.Gson;
+
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,12 +23,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 
-/**
-* Servlet that returns some example content. TODO: modify this file 
-* to handle user input instead of hard-coded comments
-*/
+/** Servlet takes in hard-coded comments **/
 @WebServlet("/data")
 public final class DataServlet extends HttpServlet {
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException { 
     List<String> commentsRecord = new List<>();

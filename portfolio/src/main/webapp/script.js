@@ -46,7 +46,7 @@ function addToContainer(discussion_log){
 * Creates an <li> element containing text. 
 */
 function createListElement(text) {
-  const liElement = document.createElement('li');
-  liElement.innerText = text;
-  return liElement;
+  const listElement = document.createElement('li');
+  listElement.innerText = text;
+  return listElement;
 }
