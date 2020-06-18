@@ -78,7 +78,7 @@ public final class FindMeetingQueryTest {
 
     Assert.assertEquals(expected, actual);
   }
-/**
+
   @Test
   public void eventSplitsRestriction() {
     // The event should split the day into two options (before and after the event).
@@ -94,7 +94,7 @@ public final class FindMeetingQueryTest {
 
     Assert.assertEquals(expected, actual);
   }
-
+/**
   @Test
   public void everyAttendeeIsConsidered() {
     // Have each person have different events. We should see two options because each person has
