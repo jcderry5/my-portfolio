@@ -14,7 +14,6 @@
 
 package com.google.sps.servlets;
 
-import com.google.gson.Gson;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,15 +21,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 
-/**
-* Servlet that returns some example content. TODO: modify this file 
-* to handle user input instead of hard-coded comments
-*/
+/** Servlet takes in hard-coded comments **/
 @WebServlet("/data")
 public final class DataServlet extends HttpServlet {
-  /**
-  * Take in hard-coded messages written by the developer and store them in json
-  */
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     ArrayList<String> commentsRecord = new ArrayList<>();
@@ -38,10 +32,16 @@ public final class DataServlet extends HttpServlet {
     commentsRecord.add("You rock! Keep on coding!");
     commentsRecord.add("This is momma! You got this girl :-)");
     commentsRecord.add("This is dad! Go break some eggs, babygirl.");
-	// Create commentsRecord object in json form
-    String json = new Gson().toJson(commentsRecord);
-    // Send the JSON as the response
-    response.setContentType("application/json;");
-    response.getWriter().println(json);
+
+  // TODO: Put Each Comment in JSON Form and Print it
+  }
+
+  /**
+  * Converts the commentsRecord instance into a JSON string using manual String concatentation.
+  */
+  private String convertToJson(ArrayList<String> commentsRecord) {
+	// TODO: Form String in JSON form using String concatentation
+    String json = "";
+    return json;
   }
 }
