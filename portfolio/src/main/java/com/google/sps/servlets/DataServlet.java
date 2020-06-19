@@ -14,19 +14,18 @@
 
 package com.google.sps.servlets;
 
-import com.google.sps.data.PortfolioComments;
 import com.google.gson.Gson;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
+import java.util.*;
 
 /** Servlet that both sends userComments to the client and receives + stores inputed User Comments*/
 @WebServlet("/data")
 public final class DataServlet extends HttpServlet {
-  private ArrayList<String> commentsRecord = new ArrayList<>();
+  private List<String> commentsRecord = new List<>();
   private String json = "";
   private String userCommentId = "user-comment";
   private String discussionPageLink = "/discussion.html";
@@ -46,7 +45,7 @@ public final class DataServlet extends HttpServlet {
     // Get Input from the Form
     String userInput = request.getParameter(userCommentId);
     // Add Input to the Master list of User Comments
-    commentsRecord.addComment(userInput);
+    commentsRecord.add(userInput);
     //Redirect back to HTML page
     response.sendRedirect(discussionPageLink);
   }
