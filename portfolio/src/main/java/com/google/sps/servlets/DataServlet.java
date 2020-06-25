@@ -20,12 +20,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList; 
 
 /** Servlet that both sends userComments to the client and receives + stores inputed User Comments*/
 @WebServlet("/data")
 public final class DataServlet extends HttpServlet {
-  private List<String> commentsRecord = new List<>();
+  private List<String> commentsRecord = new ArrayList<>();
   private String json = "";
   private String userCommentId = "user-comment";
   private String discussionPageLink = "/discussion.html";
