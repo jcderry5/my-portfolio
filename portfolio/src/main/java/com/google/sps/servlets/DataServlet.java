@@ -27,14 +27,13 @@ import java.util.ArrayList;
 @WebServlet("/data")
 public final class DataServlet extends HttpServlet {
   private List<String> commentsRecord = new ArrayList<>();
-  private String json = "";
-  private String userCommentId = "user-comment";
-  private String discussionPageLink = "/discussion.html";
+  private String USER_COMMENT_ID = "user-comment";
+  private String DISCUSSION_PAGE_LINK = "/discussion.html";
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Create commentsRecord object in json form
-    json = new Gson().toJson(commentsRecord);
+    String json = new Gson().toJson(commentsRecord);
     // Send the JSON as the response
     response.setContentType("application/json;");
     response.getWriter().println(json);
@@ -44,10 +43,10 @@ public final class DataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get Input from the Form
-    String userInput = request.getParameter(userCommentId);
+    String userInput = request.getParameter(USER_COMMENT_ID);
     // Add Input to the Master list of User Comments
     commentsRecord.add(userInput);
     //Redirect back to HTML page
-    response.sendRedirect(discussionPageLink);
+    response.sendRedirect(DISCUSSION_PAGE_LINK);
   }
 }
