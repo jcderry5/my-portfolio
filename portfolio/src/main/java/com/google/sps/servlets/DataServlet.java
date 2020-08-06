@@ -14,6 +14,7 @@
 
 package com.google.sps.servlets;
 
+<<<<<<< HEAD
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -32,7 +33,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.appengine.api.datastore.FetchOptions;
 
-
 /** 
 * Servlet that handles user's comment data 
 */
@@ -40,7 +40,7 @@ import com.google.appengine.api.datastore.FetchOptions;
 public final class DataServlet extends HttpServlet {
   // Set default to 5
   int maxCommentsPosted = 5;
-  DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+  private DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {

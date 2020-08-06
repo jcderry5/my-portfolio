@@ -1,6 +1,6 @@
 @font-face{
-     font-family: googleFont;
-     src: url("/fonts/Product-Sans-Regular.ttf");
+   font-family: googleFont;
+   src: url("/fonts/Product-Sans-Regular.ttf");
 }
 
 body{
@@ -10,8 +10,8 @@ body{
 }
 
 h1{
-	font-size: 300%;
-    text-shadow: 2px 2px #C9D6D8;
+  font-size: 300%;
+  text-shadow: 2px 2px #C9D6D8;
 }
 
 ul{
@@ -52,83 +52,83 @@ hr{
 }
 
 #top-img{
-    width: 80%;
-    height: 100%;
+  width: 80%;
+  height: 100%;
 }
 
 #second-page{
-    display: flex;
-    justify-content: space-evenly;
-    width:80%;
-    margin-top: auto;
-    min-height: 60vh;
-    padding: 2%;
+  display: flex;
+  justify-content: space-evenly;
+  width:80%;
+  margin-top: auto;
+  min-height: 60vh;
+  padding: 2%;
 }
 
 /* CSS for Hovering Captions */
 
 .caption-style-1 {
-    list-style-type: none;
-    margin-left: 30vh;
-    padding: 0px;
+  list-style-type: none;
+  margin-left: 30vh;
+  padding: 0px;
 }
 
 .caption-style-1 li {
-    float: left;
-    padding: 0px;
-    position: relative;
-    overflow: hidden;
-    margin: 2%;
+  float: left;
+  padding: 0px;
+  position: relative;
+  overflow: hidden;
+  margin: 2%;
 }
 
 .caption-style-1 li:hover .caption {
-	opacity: 1;
+  opacity: 1;
 }
 
 .caption-style-1 img {
-    margin: 0px;
-    padding: 0px;
-    float: left;
-    z-index: 4;
-    height: 400px;
-    width: 400px;
+  margin: 0px;
+  padding: 0px;
+  float: left;
+  z-index: 4;
+  height: 400px;
+  width: 400px;
 }
 
 .caption-style-1 .caption {
-    cursor: pointer;
-    position: absolute;
-    opacity: 0;
-    transition: all 0.45s ease-in-out;
+  cursor: pointer;
+  position: absolute;
+  opacity: 0;
+  transition: all 0.45s ease-in-out;
 }
 
 .caption-style-1 .blur {
-    background-color: rgba(0,0,0,0.65);
-    height: 400px;
-    width: 400px;
-    z-index: 5;
-    position: absolute;
+  background-color: rgba(0,0,0,0.65);
+  height: 400px;
+  width: 400px;
+  z-index: 5;
+  position: absolute;
 }
 
 .caption-style-1 .caption-text h1 {
-    text-transform: uppercase;
-    font-size: 24px;
+  text-transform: uppercase;
+  font-size: 24px;
 }
 
 .caption-style-1 .caption-text {
-    z-index: 10;
-    color: #fff;
-    position: absolute;
-    width: 400px;
-    height: 300px;
-    text-align: center;
-    top: 100px;
+  z-index: 10;
+  color: #fff;
+  position: absolute;
+  width: 400px;
+  height: 300px;
+  text-align: center;
+  top: 100px;
 }
 
 .full-page{
-    min-height: 100vh;
-    width: 50%;
- 	padding: 20px;
-    margin: auto;
+  min-height: 100vh;
+  width: 50%;
+   padding: 20px;
+  margin: auto;
 }
 
 /* CSS to Create Interactive Nav Bar */
@@ -151,57 +151,57 @@ hr{
 }
 
 .nav{
-	display:flex;
-	justify-content:center;
-	align-items:center;
-    margin: 10px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin: 10px;
 }
 
 .nav-btn{
-    cursor:pointer;
-	position:relative;
-	background:white;
-	font-size:28px;
-	border-top-right-radius:10px;
-	border-bottom-left-radius:10px;
-	transition:all 1s;
-    margin-right: 20px;
+  cursor:pointer;
+  position:relative;
+  background:white;
+  font-size:28px;
+  border-top-right-radius:10px;
+  border-bottom-left-radius:10px;
+  transition:all 1s;
+  margin-right: 20px;
 }
 
 .nav-btn:after, .nav-btn:before {
-    content:" ";
-    width: 10px;
-    height:10px;
-    position:absolute;
-    border :0px solid #fff;
-    transition:all 1s;
+  content:" ";
+  width: 10px;
+  height:10px;
+  position:absolute;
+  border :0px solid #fff;
+  transition:all 1s;
 }
-	
+  
 .nav-btn:after{
-    top:-1px;
-    left:-1px;
-    border-top:5px solid black;
-    border-left:5px solid black;
+  top:-1px;
+  left:-1px;
+  border-top:5px solid black;
+  border-left:5px solid black;
 }
-	
+  
 .nav-btn:before{
-    bottom:-1px;
-    right:-1px;
-    border-bottom:5px solid black;
-    border-right:5px solid black;
+  bottom:-1px;
+  right:-1px;
+  border-bottom:5px solid black;
+  border-right:5px solid black;
 }
-	
+  
 .nav-btn:hover{
-    border-top-right-radius:0px;
-    border-bottom-left-radius:0px;
+  border-top-right-radius:0px;
+  border-bottom-left-radius:0px;
 }
 
 .nav-btn:hover:before,.nav-btn:hover:after{
-    width:100%;
-    height:100%;
+  width:100%;
+  height:100%;
 }
 
 a{
-    text-decoration: none;
-    z-index: 100;
+  text-decoration: none;
+  z-index: 100;
 }
