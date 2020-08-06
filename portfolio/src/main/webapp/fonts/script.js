@@ -4,7 +4,7 @@
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//   https://www.apache.org/licenses/LICENSE-2.0
+//     https://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -30,9 +30,7 @@ function parseJson(response){
   discussionLog.then(addToContainer);
 }
 
-/*
-* This function will add each comment to the discussion container
-*/
+// This function will add each comment to the discussion container
 function addToContainer(discussion_log){
   console.log('Adding comments to the discussion-container');
   // Build the list of previous comments
@@ -42,9 +40,7 @@ function addToContainer(discussion_log){
   );
 }
 
-/** 
-* Creates an <li> element containing text. 
-*/
+/** Creates an <li> element containing text. */
 function createListElement(text) {
   const liElement = document.createElement('li');
   liElement.innerText = text;

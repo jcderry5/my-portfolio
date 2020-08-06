@@ -21,24 +21,33 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
+import java.util.List;
+import java.util.ArrayList; 
 
-/** Servlet takes in hard-coded comments **/
+/** Servlet that both sends userComments to the client and receives + stores inputed User Comments*/
 @WebServlet("/data")
 public final class DataServlet extends HttpServlet {
+  private List<String> commentsRecord = new ArrayList<>();
+  private String USER_COMMENT_ID = "user-comment";
+  private String DISCUSSION_PAGE_LINK = "/discussion.html";
 
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException { 
-    List<String> commentsRecord = new List<>();
-    // Add Sample Comments
-    commentsRecord.add("You rock! Keep on coding!");
-    commentsRecord.add("This is momma! You got this girl :-)");
-    commentsRecord.add("This is dad! Go break some eggs, babygirl.");
-	
-    //Create commentsRecord object in json form
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // Create commentsRecord object in json form
     String json = new Gson().toJson(commentsRecord);
     // Send the JSON as the response
     response.setContentType("application/json;");
     response.getWriter().println(json);
+  }
+
+  /* Receive Any New Inputed Comments from User */
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // Get Input from the Form
+    String userInput = request.getParameter(USER_COMMENT_ID);
+    // Add Input to the Master list of User Comments
+    commentsRecord.add(userInput);
+    //Redirect back to HTML page
+    response.sendRedirect(DISCUSSION_PAGE_LINK);
   }
 }
