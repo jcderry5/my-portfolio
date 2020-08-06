@@ -41,8 +41,6 @@ import java.util.List;
 public final class DataServlet extends HttpServlet {
   // Set default to 5
   int maxCommentsPosted = 5;
-  private DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     int limit = getMaxComments(request);
@@ -53,7 +51,7 @@ public final class DataServlet extends HttpServlet {
     
     //PreparedQuery results = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(maxCommentsPosted));
     // Create a List of User Entries with only the number of comments that the user requested
-    List<UserEntry> commentsRecord = collectEntriesToPost(commentResults);
+    List<UserEntry> commentsRecord = collectEntriesToPost(commentsResults);
 	// Create commentsRecord object in json form
     String json = new Gson().toJson(commentsRecord);
     // Send the JSON as the response
@@ -72,7 +70,7 @@ public final class DataServlet extends HttpServlet {
     * For loop through the number of stored results that the user requests,
     * collect info, and create a UserEntry from it
     */
-    for (Entity entity : commentsResults.asIterable()) {
+    for (Entity entity : commentsResults) {
       long id = entity.getKey().getId();
       String username = (String) entity.getProperty("userName");
       String comment = (String) entity.getProperty("userComment");
@@ -93,9 +91,6 @@ public final class DataServlet extends HttpServlet {
     // Get Input from the Form
     String userInput = request.getParameter("user-comment");
     long timestamp = System.currentTimeMillis();
-
-    // TODO: Remove the following line once I doGet from Datastore instead of ArrayList
-    commentsRecord.add(userInput);
 
     // Add Input to the Master list of User Comments
     Entity commentsEntity = new Entity("Comments");
