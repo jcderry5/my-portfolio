@@ -19,7 +19,8 @@ ul{
     list-style: none;
 }
 
-#prev-comments{
+/* Discussion Page Styling */
+#discussion-container{
     text-align: left;
     border-color: black;
     border-radius: 10px;
