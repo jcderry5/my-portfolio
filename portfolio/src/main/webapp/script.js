@@ -19,20 +19,17 @@ function generateDiscussion() {
   console.log('Fetching discussion.');
   // fetch() function returns a promise
   const discussionLogPromise = fetch('/data');
-  // When the request is complete, pass the response into parseJSON()
-  discussionLogPromise.then(parseJson);
+  discussionLogPromise.then(convertToJson);
 }
 
-// This function will handle the response and turn it to json
-function parseJson(response){
-  console.log('Parse the response into JSON');
+// This function will handle the response and convert it to json
+function convertToJson(response){
+  console.log('Convert the response to JSON');
   const discussionLog = response.json();
   discussionLog.then(addToContainer);
 }
 
-/*
-* This function will add each comment to the discussion container
-*/
+// This function will add each comment to the discussion container
 function addToContainer(discussion_log){
 	console.log('Adding comments to the discussion-container');
     // Build the list of previous comments

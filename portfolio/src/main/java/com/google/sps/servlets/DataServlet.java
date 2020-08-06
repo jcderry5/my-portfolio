@@ -14,6 +14,7 @@
 
 package com.google.sps.servlets;
 
+import com.google.gson.Gson;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -30,6 +31,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 /** 
 * Servlet that handles user's comment data 
@@ -42,6 +45,7 @@ public final class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    int limit = getMaxComments(request);
     // Gather all the user comments and sort them by timestamp
     FetchOptions options = FetchOptions.Builder.withLimit(limit);
     Query query = new Query("Comments").addSort("timestamp", SortDirection.DESCENDING);
@@ -83,29 +87,24 @@ public final class DataServlet extends HttpServlet {
   /*
   * Receive Any New Inputed Comments from User
   */
+
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get Input from the Form
-    String userName = request.getParameter("user-name");
-  	String userComment = request.getParameter("user-comment");
+    String userInput = request.getParameter("user-comment");
     long timestamp = System.currentTimeMillis();
 
-    // Get max number of comments to show 
-    maxCommentsPosted = getMaxComments(request);
+    // TODO: Remove the following line once I doGet from Datastore instead of ArrayList
+    commentsRecord.add(userInput);
 
     // Add Input to the Master list of User Comments
-    Entity inputEntity = new Entity("Comments");
-    inputEntity.setProperty("userName", userName);
-    inputEntity.setProperty("userComment", userComment);
-    inputEntity.setProperty("timestamp", timestamp);
+    Entity commentsEntity = new Entity("Comments");
+    commentsEntity.setProperty("userInput", userInput);
+    commentsEntity.setProperty("timestamp", timestamp);
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(commentsEntity);
 
-    // if statement to ensure empty usernames nor usercomments are put into database
-	if(inputEntity.getProperty("userName")!= null || inputEntity.getProperty("userComment")!= null){
-      DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-      datastore.put(inputEntity);
-    }
-
-    //Redirect back to HTML page
+     //Redirect back to HTML page
     response.sendRedirect("/discussion.html");
   }
 
