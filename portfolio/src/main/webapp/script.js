@@ -34,19 +34,63 @@ function parseJson(response){
 * This function will add each comment to the discussion container
 */
 function addToContainer(discussion_log){
-  console.log('Adding comments to the discussion-container');
-  // Build the list of previous comments
-  const discussionListElement = document.getElementById('prev-comments');
-  discussion_log.masterCommentList.forEach((line) =>
-    discussionListElement.appendChild(createListElement(line))
-  );
+	console.log('Adding comments to the discussion-container');
+    // Build the list of previous comments
+    const discussionListElement = document.getElementById('discussion-container');
+    console.log('Outside the forEach loop.');
+    console.log(discussion_log);
+    discussion_log.forEach((userInput) => {
+        console.log('Inside the forEach loop.');
+        discussionListElement.appendChild(createElement(userInput));
+    })
 }
 
-/** 
-* Creates an <li> element containing text. 
-*/
-function createListElement(text) {
-  const liElement = document.createElement('li');
-  liElement.innerText = text;
-  return liElement;
+/** Creates an <li> element containing text. */
+function createElement(userInput) {
+	
+    //Printing userInput for testing purposes
+    console.log('Inside the createElement function');
+    console.log(userInput);
+
+    // Create Body Element that userName and userComment will be in
+    const commentBody = document.createElement('div');
+    commentBody.className = 'comment-body';
+
+	// Create Title Element that contains the userName
+	const titleElement = document.createElement('h2');
+    titleElement.className = 'user-title';
+    titleElement.innerText = userInput.userName;
+
+	// Create Comment Element that Comment will go in
+    const commentElement = document.createElement('p');
+    commentElement.className = 'comment-box';
+    commentElement.innerText = userInput.userComment;
+
+	// Create a button element that allows the user to delete comment
+    // TODO: Make functioning
+    const deleteButtonElement = document.createElement('button');
+  	deleteButtonElement.innerText = 'Delete';
+  	deleteButtonElement.addEventListener('click', () => {
+    	deleteComment(userInput);
+
+    	// Remove the comment from the DOM.
+    	commentBody.remove();
+  	});
+	
+    // Add a horizontal line break between comments
+    const horizLineElement = document.createElement('hr');
+
+    //Append all children of the comment body to comment body
+    commentBody.appendChild(titleElement);
+    commentBody.appendChild(commentElement);
+    commentBody.appendChild(deleteButtonElement);
+    commentBody.appendChild(horizLineElement);
+    return commentBody;
+}
+
+/** Tells the server to delete the comment. */
+function deleteComment(comment) {
+  const params = new URLSearchParams();
+  params.append('id', comment.id);
+  fetch('/delete-comment', {method: 'POST', body: params});
 }

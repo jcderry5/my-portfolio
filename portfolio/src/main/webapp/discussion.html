@@ -5,21 +5,28 @@
     <title>Discussion Board</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
+    <style>
+        body{
+            background-color: #efecec;
+	        background-image: linear-gradient(315deg, #efecec 0%, #f9aba4 74%);
+        }
+    </style>
   </head>
   <body onload="generateDiscussion()">
     <div id="content">
-      <h1>Discussion Board</h1>
-      <p>This is my website to show a discussion board with the topic of JALYN!</p>
-      <h2> Previous comments </h2>
-      <ul id="prev-comments"></ul>
-      <form action="/data" method="POST">
-        <h2> Comments Below </h2>
-        <input type="text" name="user-comment">
-        <br/><br/>
-        <input type="submit" />
-      </form>
-      <button onclick="generateDiscussion()">Generate Discussion!</button>
-      <div id="discussion-container"></div>
+        <h1>Discussion Board</h1>
+        <p>This is my website to show a discussion board with the topic of JALYN!</p>
+        <h2> Previous comments </h2>
+        <div id="discussion-container"></div>
+        <form action="/data" method="POST">
+            <h2> Comments Below </h2>
+            <input type="text" name="user-name" placeholder="Your Name">
+            <br>
+            <br>
+            <textarea name="user-comment" placeholder="Your Comment" rows="4" cols="80" style="padding: 5px"></textarea>
+            <br><br>
+            <input type="submit" />
+        </form>
     </div>
   </body>
 </html>
