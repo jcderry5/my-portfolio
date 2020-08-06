@@ -41,17 +41,17 @@ import java.util.List;
 public final class DataServlet extends HttpServlet {
   // Set default to 5
   int maxCommentsPosted = 5;
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    int limit = getMaxComments(request);
     // Gather all the user comments and sort them by timestamp
-    FetchOptions options = FetchOptions.Builder.withLimit(limit);
+    FetchOptions options = FetchOptions.Builder.withLimit(maxCommentsPosted);
     Query query = new Query("Comments").addSort("timestamp", SortDirection.DESCENDING);
     List<Entity> commentsResults = ServletUtil.DATASTORE.prepare(query).asList(options);
-    
-    //PreparedQuery results = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(maxCommentsPosted));
+    System.out.println(commentsResults);
     // Create a List of User Entries with only the number of comments that the user requested
     List<UserEntry> commentsRecord = collectEntriesToPost(commentsResults);
+    System.out.println(commentsRecord);
 	// Create commentsRecord object in json form
     String json = new Gson().toJson(commentsRecord);
     // Send the JSON as the response
@@ -72,10 +72,10 @@ public final class DataServlet extends HttpServlet {
     */
     for (Entity entity : commentsResults) {
       long id = entity.getKey().getId();
-      String username = (String) entity.getProperty("userName");
-      String comment = (String) entity.getProperty("userComment");
+      String username = (String) entity.getProperty("username");
+      String comment = (String) entity.getProperty("userInput");
       long timestamp = (long) entity.getProperty("timestamp");
-      // Only add to the list if you have yet to reach the number of comments requested 
+      // Only add to the list if you have yet to reach the number of comments requested
       UserEntry userEntry = new UserEntry(id, username, comment, timestamp);
       commentsRecord.add(userEntry);
   	}
@@ -89,6 +89,7 @@ public final class DataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get Input from the Form
+    String userName = request.getParameter("user-name");
     String userInput = request.getParameter("user-comment");
     long timestamp = System.currentTimeMillis();
 
@@ -96,10 +97,10 @@ public final class DataServlet extends HttpServlet {
     Entity commentsEntity = new Entity("Comments");
     commentsEntity.setProperty("userInput", userInput);
     commentsEntity.setProperty("timestamp", timestamp);
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    datastore.put(commentsEntity);
+    commentsEntity.setProperty("username", userName);
+    ServletUtil.DATASTORE.put(commentsEntity);
 
-     //Redirect back to HTML page
+    //Redirect back to HTML page
     response.sendRedirect("/discussion.html");
   }
 

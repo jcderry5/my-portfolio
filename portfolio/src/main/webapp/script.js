@@ -57,7 +57,7 @@ function createElement(userInput) {
 	// Create Title Element that contains the userName
 	const titleElement = document.createElement('h2');
     titleElement.className = 'user-title';
-    titleElement.innerText = userInput.userName;
+    titleElement.innerText = userInput.username;
 
 	// Create Comment Element that Comment will go in
     const commentElement = document.createElement('p');
