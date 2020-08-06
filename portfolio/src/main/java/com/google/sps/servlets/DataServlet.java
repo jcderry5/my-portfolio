@@ -21,6 +21,7 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
+import com.google.appengine.api.datastore.FetchOptions;
 import com.google.sps.data.UserEntry;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.google.appengine.api.datastore.FetchOptions;
 
 
 /** 
@@ -43,14 +45,15 @@ public final class DataServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Gather all the user comments and sort them by timestamp
+    FetchOption options = FetchOptions.Builder.withLimit(limit);
     Query query = new Query("Comments").addSort("timestamp", SortDirection.DESCENDING);
-    PreparedQuery results = datastore.prepare(query);
-
-    List<UserEntry> commentsRecord = collectEntriesToPost(results);
-   
+    List<Entity> commentsResults = ServletUtil.DATASTORE.prepare(query).asList(options);
+    
+    //PreparedQuery results = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(maxCommentsPosted));
+    // Create a List of User Entries with only the number of comments that the user requested
+    List<UserEntry> commentsRecord = collectEntriesToPost(commentResults);
 	// Create commentsRecord object in json form
     String json = new Gson().toJson(commentsRecord);
-    
     // Send the JSON as the response
     response.setContentType("application/json;");
     response.getWriter().println(json);
@@ -59,28 +62,24 @@ public final class DataServlet extends HttpServlet {
   /* 
   * Create the list of comments to be posted on website
   */
-  private List collectEntriesToPost(PreparedQuery results){
+  private List collectEntriesToPost(List<Entity> commentsResults){
     // Create list of entities that contain UserEntry objects
     List<UserEntry> commentsRecord = new ArrayList<>();
 
-    int count = 0;
     /**
-    * For loop through all the stored results
-    * Once you've gathered the info of the current result check add it to the userEntry
-    * to be posted on website until they reach the requested number of comments
+    * For loop through the number of stored results that the user requests,
+    * collect info, and create a UserEntry from it
     */
-    for (Entity entity : results.asIterable()) {
-      count++;
+    for (Entity entity : commentsResults.asIterable()) {
       long id = entity.getKey().getId();
       String username = (String) entity.getProperty("userName");
       String comment = (String) entity.getProperty("userComment");
       long timestamp = (long) entity.getProperty("timestamp");
       // Only add to the list if you have yet to reach the number of comments requested 
-      if(count <= maxCommentsPosted){
-        UserEntry userEntry = new UserEntry(id, username, comment, timestamp);
-      	commentsRecord.add(userEntry);
-      }
+      UserEntry userEntry = new UserEntry(id, username, comment, timestamp);
+      commentsRecord.add(userEntry);
   	}
+    return commentsRecord;
   }
 
   /*
