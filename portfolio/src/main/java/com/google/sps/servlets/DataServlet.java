@@ -48,10 +48,10 @@ public final class DataServlet extends HttpServlet {
     FetchOptions options = FetchOptions.Builder.withLimit(maxCommentsPosted);
     Query query = new Query("Comments").addSort("timestamp", SortDirection.DESCENDING);
     List<Entity> commentsResults = ServletUtil.DATASTORE.prepare(query).asList(options);
-    System.out.println(commentsResults);
+    
     // Create a List of User Entries with only the number of comments that the user requested
     List<UserEntry> commentsRecord = collectEntriesToPost(commentsResults);
-    System.out.println(commentsRecord);
+    
 	// Create commentsRecord object in json form
     String json = new Gson().toJson(commentsRecord);
     // Send the JSON as the response
