@@ -22,6 +22,7 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
+import com.google.appengine.api.datastore.FetchOptions;
 import com.google.sps.data.UserEntry;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,36 +39,96 @@ import java.util.List;
 */
 @WebServlet("/data")
 public final class DataServlet extends HttpServlet {
-  private List<String> commentsRecord = new ArrayList<>();
+  // Set default to 5
+  int maxCommentsPosted = 5;
+  public static final String userNameTag = "user-name";
+  public static final String datastoreUserNameTag = "userName";
+  public static final String userCommentTag = "user-comment";
+  public static final String userInputTag = "userInput";
+  public static final String commentsQuantityTag = "quantity";
+  public static final String commentsQueryParameter = "Comments";
+  public static final String userTimeStampTag = "timestamp";
+  public static final String discussionPath = "/discussion.html";
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    //TODO: Take the info from Datastore instead of from commentsRecord list
+    // Gather all the user comments and sort them by timestamp
+    FetchOptions options = FetchOptions.Builder.withLimit(maxCommentsPosted);
+    Query query = new Query(commentsQueryParameter).addSort("timestamp", SortDirection.DESCENDING);
+    List<Entity> commentsResults = ServletUtil.DATASTORE.prepare(query).asList(options);
+    // Create a List of User Entries with only the number of comments that the user requested
+    List<UserEntry> commentsRecord = collectEntriesToPost(commentsResults);
+    
+    // Create commentsRecord object in json form
     String json = new Gson().toJson(commentsRecord);
-  
     // Send the JSON as the response
     response.setContentType("application/json;");
     response.getWriter().println(json);
   }
 
-  /* Receive Any New Inputed Comments from User */
+  /* 
+  * Create the list of comments to be posted on website
+  */
+  private List collectEntriesToPost(List<Entity> commentsResults){
+    // Create list of entities that contain UserEntry objects
+    List<UserEntry> commentsRecord = new ArrayList<>();
+    /**
+    * For loop through the number of stored results that the user requests,
+    * collect info, and create a UserEntry from it
+    */
+    for (Entity entity : commentsResults) {
+      long id = entity.getKey().getId();
+      String username = (String) entity.getProperty("username");
+      String comment = (String) entity.getProperty("userInput");
+      long timestamp = (long) entity.getProperty("timestamp");
+      UserEntry userEntry = new UserEntry(id, username, comment, timestamp);
+      commentsRecord.add(userEntry);
+    }
+    return commentsRecord;
+  }
+
+  /*
+  * Receive Any New Inputed Comments from User
+  */
+
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get Input from the Form
-    String userInput = request.getParameter("user-comment");
+    String userName = request.getParameter(userNameTag);
+    String userInput = request.getParameter(userCommentTag);
     long timestamp = System.currentTimeMillis();
+    maxCommentsPosted = Integer.parseInt(request.getParameter(commentsQuantityTag));
+    
+    // Add Input to the Master list of User Comments if userName & userInput isnt null
+    if(userName != null && userInput != userInput){
+      Entity commentsEntity = new Entity(commentsQueryParameter);
+      commentsEntity.setProperty(userInputTag, userInput);
+      commentsEntity.setProperty(userTimeStampTag, timestamp);
+      commentsEntity.setProperty(datastoreUserNameTag, userName);
+      ServletUtil.DATASTORE.put(commentsEntity);
+    }
 
-    // TODO: Remove the following line once I doGet from Datastore instead of ArrayList
-    commentsRecord.add(userInput);
+    //Redirect back to HTML page
+    response.sendRedirect(discussionPath);
+  }
 
-    // Add Input to the Master list of User Comments
-    Entity commentsEntity = new Entity("Comments");
-    commentsEntity.setProperty("userInput", userInput);
-    commentsEntity.setProperty("timestamp", timestamp);
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    datastore.put(commentsEntity);
+  private int getMaxComments(HttpServletRequest request) {
+    final int DEFAULT_MAX = 3;
+    String maxNumberString =  request.getParameter(commentsQuantityTag);
 
-     //Redirect back to HTML page
-    response.sendRedirect("/discussion.html");
+    //Convert String to int
+    int maxNumberInt;
+    try {
+      maxNumberInt = Integer.parseInt(maxNumberString);
+    } catch (NumberFormatException e) {
+      System.err.println("Could not convert to int: " + maxNumberString);
+      return DEFAULT_MAX;
+    }
+    // Check that the input is greater than 0
+    if (maxNumberInt < 1) {
+      System.err.println("Player choice is out of range: " + maxNumberString);
+      return DEFAULT_MAX;
+    }
+    return maxNumberInt;
   }
 }
