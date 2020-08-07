@@ -31,13 +31,12 @@ function convertToJson(response){
 
 // This function will add each comment to the discussion container
 function addToContainer(discussion_log){
-	console.log('Adding comments to the discussion-container');
+    console.log('Adding comments to the discussion-container');
     // Build the list of previous comments
     const discussionListElement = document.getElementById('discussion-container');
     discussion_log.forEach((userInput) => {
         discussionListElement.appendChild(createElement(userInput));
     })
-    
 }
 
 /** Creates an <li> element containing text. */
@@ -46,26 +45,24 @@ function createElement(userInput) {
     const commentBody = document.createElement('div');
     commentBody.className = 'comment-body';
 
-	// Create Title Element that contains the userName
-	const titleElement = document.createElement('h2');
+    // Create Title Element that contains the userName
+    const titleElement = document.createElement('h2');
     titleElement.className = 'user-title';
     titleElement.innerText = userInput.userName;
 
-	// Create Comment Element that Comment will go in
+    // Create Comment Element that Comment will go in
     const commentElement = document.createElement('p');
     commentElement.className = 'comment-box';
     commentElement.innerText = userInput.userComment;
 
-	// Create a button element that allows the user to delete comment
-    // TODO: Make functioning
+    // Create a button element that allows the user to delete comment
     const deleteButtonElement = document.createElement('button');
-  	deleteButtonElement.innerText = 'Delete';
-  	deleteButtonElement.addEventListener('click', () => {
-    	deleteComment(comment);
-
-    	// Remove the comment from the DOM.
-    	commentBody.remove();
-  	});
+    deleteButtonElement.innerText = 'Delete';
+    deleteButtonElement.addEventListener('click', () => {
+        deleteComment(comment);
+        // Remove the comment from the DOM.
+        commentBody.remove();
+    });
 	
     // Add a horizontal line break between comments
     const horizLineElement = document.createElement('hr');
