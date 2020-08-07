@@ -59,7 +59,7 @@ public final class DataServlet extends HttpServlet {
     // Create a List of User Entries with only the number of comments that the user requested
     List<UserEntry> commentsRecord = collectEntriesToPost(commentsResults);
     
-	// Create commentsRecord object in json form
+    // Create commentsRecord object in json form
     String json = new Gson().toJson(commentsRecord);
     // Send the JSON as the response
     response.setContentType("application/json;");
@@ -83,7 +83,7 @@ public final class DataServlet extends HttpServlet {
       long timestamp = (long) entity.getProperty("timestamp");
       UserEntry userEntry = new UserEntry(id, username, comment, timestamp);
       commentsRecord.add(userEntry);
-  	}
+    }
     return commentsRecord;
   }
 
@@ -125,10 +125,10 @@ public final class DataServlet extends HttpServlet {
       return DEFAULT_MAX;
     }
     // Check that the input is greater than 0
-  	if (maxNumberInt < 1) {
+    if (maxNumberInt < 1) {
       System.err.println("Player choice is out of range: " + maxNumberString);
       return DEFAULT_MAX;
     }
-  	return maxNumberInt;
+    return maxNumberInt;
   }
 }
