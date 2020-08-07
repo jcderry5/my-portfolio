@@ -41,12 +41,20 @@ import java.util.List;
 public final class DataServlet extends HttpServlet {
   // Set default to 5
   int maxCommentsPosted = 5;
+  public static final String userNameTag = "user-name";
+  public static final String datastoreUserNameTag = "userName";
+  public static final String userCommentTag = "user-comment";
+  public static final String userInputTag = "userInput";
+  public static final String commentsQuantityTag = "quantity";
+  public static final String commentsQueryParameter = "Comments";
+  public static final String userTimeStampTag = "timestamp";
+  public static final String discussionPath = "/discussion.html";
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Gather all the user comments and sort them by timestamp
     FetchOptions options = FetchOptions.Builder.withLimit(maxCommentsPosted);
-    Query query = new Query("Comments").addSort("timestamp", SortDirection.DESCENDING);
+    Query query = new Query(commentsQueryParameter).addSort("timestamp", SortDirection.DESCENDING);
     List<Entity> commentsResults = ServletUtil.DATASTORE.prepare(query).asList(options);
     // Create a List of User Entries with only the number of comments that the user requested
     List<UserEntry> commentsRecord = collectEntriesToPost(commentsResults);
@@ -86,27 +94,27 @@ public final class DataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get Input from the Form
-    String userName = request.getParameter("user-name");
-    String userInput = request.getParameter("user-comment");
+    String userName = request.getParameter(userNameTag);
+    String userInput = request.getParameter(userCommentTag);
     long timestamp = System.currentTimeMillis();
-    maxCommentsPosted = Integer.parseInt(request.getParameter("quantity"));
+    maxCommentsPosted = Integer.parseInt(request.getParameter(commentsQuantityTag));
     
     // Add Input to the Master list of User Comments if userName & userInput isnt null
     if(userName != null && userInput != userInput){
-      Entity commentsEntity = new Entity("Comments");
-      commentsEntity.setProperty("userInput", userInput);
-      commentsEntity.setProperty("timestamp", timestamp);
-      commentsEntity.setProperty("username", userName);
+      Entity commentsEntity = new Entity(commentsQueryParameter);
+      commentsEntity.setProperty(userInputTag, userInput);
+      commentsEntity.setProperty(userTimeStampTag, timestamp);
+      commentsEntity.setProperty(datastoreUserNameTag, userName);
       ServletUtil.DATASTORE.put(commentsEntity);
     }
 
     //Redirect back to HTML page
-    response.sendRedirect("/discussion.html");
+    response.sendRedirect(discussionPath);
   }
 
   private int getMaxComments(HttpServletRequest request) {
     final int DEFAULT_MAX = 3;
-    String maxNumberString =  request.getParameter("quantity");
+    String maxNumberString =  request.getParameter(commentsQuantityTag);
 
     //Convert String to int
     int maxNumberInt;
